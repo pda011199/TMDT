@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Category";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model List<DoAn.Models.Domain.LoaiSp>
+<p><a class="btn btn-primary" asp-action="Add" asp-controller="Category">Add</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            <td>MaLoaiSp</td>
+            <td>TenLoaiSp</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaLoaiSp</td>
+                <td>@item.TenLoaiSp</td>
+            </tr>
+        }
+    </tbody>
+</table>

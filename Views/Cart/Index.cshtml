@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@*<h1>Cart Page</h1>
+<table class="table-bordered table">
+    <tr>
+        <th>Option</th>
+        <th>MaSp</th>
+        <th>TenSp</th>
+        <th>HinhAnh</th>
+        <th>Gia</th>
+        <th>SoLuong</th>
+        <th>Tong cong</th>
+    </tr>
+    @foreach (var item in ViewBag.cart)
+    {
+        <tr>
+            <td><a asp-controller="cart" asp-action="Remove" asp-route-id="@item.SanPham.MaSp">Remove</a></td>
+            <td>@item.SanPham.MaSp</td>
+            <td>@item.SanPham.TenSp</td>
+            <td><img src="~/images/@item.SanPham.HinhAnh" width="60" height="60" /></td>
+            <td>@item.SanPham.Gia</td>
+            <td>@item.SoLuong</td>
+            <td>@(item.SanPham.Gia * item.SoLuong)</td>
+        </tr>
+    }
+    <tr>
+        <td align="right" colspan="6">
+            Sum
+        </td>
+        <td>@ViewBag.total</td>
+    </tr>
+</table>
+<br />
+<a asp-action="Index" asp-controller="Product">Continue Shopping</a>*@
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Home/Shop/Single product/Cart list</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--================Cart Area =================-->
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="display:none;">Id</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng cộng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.cart)
+                        {
+                            <tr>
+                                <td style="display:none;">@item.SanPham.MaSp</td>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="~/images/@item.SanPham.HinhAnh" width="150" height="150" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@item.SanPham.TenSp</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>@item.SanPham.Gia VNĐ</h5>
+                                </td>
+                                <td>
+                                    <form asp-action="Update" asp-controller="Cart" asp-route-id="@item.SanPham.MaSp">
+                                        <input class="input-number" type="number" name="soLuong" value="@item.SoLuong" min="1" max="@item.SanPham.SoLuong">
+                                        <input type="hidden" name="id" value="@item.SanPham.MaSp" />
+                                        <input class="btn_3" type="submit" value="Update" />
+                                    </form>
+                                    <p><a asp-controller="cart" asp-action="Remove" asp-route-id="@item.SanPham.MaSp">Remove</a></p>
+                                </td>
+                                <td>
+                                    <h5>@(item.SanPham.Gia * item.SoLuong) VNĐ</h5>
+                                </td>
+                            </tr>
+
+
+
+                        }
+                        <tr class="bottom_button">
+                            <td>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            @*<td>
+                                <div class="cupon_text float-right">
+                                    <a class="btn_1" href="#">Update Cart</a>
+                                </div>
+                            </td>*@
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Tạm tính</h5>
+                            </td>
+                            <td>
+                                <h5>@ViewBag.total VNĐ</h5>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1" asp-action="Index" asp-controller="Home">Continue Shopping</a>
+                    <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+</section>
+<!--================End Cart Area =================-->

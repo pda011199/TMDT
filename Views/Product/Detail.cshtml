@@ -1,0 +1,79 @@
+﻿@model DoAn.Models.Domain.SanPham
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Home/Shop/Single product</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+
+<div class="product_image_area section_padding">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-5">
+                <div class="product_slider_img">
+                    <div id="vertical">
+                        <div data-thumb="~/images/@Model.HinhAnh">
+                            <img src="~/images/@Model.HinhAnh" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3>@Html.DisplayFor(model => model.TenSp)</h3>
+                    <h2>Giá bìa: @Html.DisplayFor(model => model.Gia) VNĐ</h2>
+                    <ul class="list">
+                        <li>
+                            <a class="active" href="#">
+                                <span>Thể loại</span> : @Html.DisplayFor(model => model.LoaiSp.TenLoaiSp)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"> <span>Số lượng</span> : @Html.DisplayFor(model => model.SoLuong)</a>
+                        </li>
+                    </ul>
+                    <p>
+                        @Html.DisplayFor(model => model.Mota)
+                    </p>
+                    <div class="card_area">
+                        <form asp-action="Buy" asp-controller="Cart" asp-route-id="@Model.MaSp" method="post">
+                            <input class="input-number" type="number" name="soLuong" value="1" min="1" max="@Model.SoLuong" />
+                            <input type="hidden" name="id" value="@Model.MaSp" />
+                            <input type="submit" value="THÊM VÀO GIỎ HÀNG" class="btn_3"/>
+                        </form>
+                        @*<div class="product_count d-inline-block">
+                            <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                            <input class="input-number" type="text" value="1" min="0" max="10">
+                            <span class="number-increment"> <i class="ti-plus"></i></span>
+                        </div>
+                        <div class="add_to_cart">
+                            <a asp-action="Buy" asp-controller="Cart" asp-route-id="@Model.MaSp" class="btn_3">add to cart</a>
+                            <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+                        </div>*@
+                        <div class="social_icon">
+                            <a href="#" class="fb"><i class="ti-facebook"></i></a>
+                            <a href="#" class="tw"><i class="ti-twitter-alt"></i></a>
+                            <a href="#" class="li"><i class="ti-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
