@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<DoAn.Models.Domain.User> SignInManager
+@inject UserManager<DoAn.Models.Domain.User> UserManager
+
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"
+               title="Welcome">Welcome @User.Identity.Name!</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-area="">
+                <button type="submit" class="nav-link btn btn-link text-info">Logout</button>
+
+            </form>
+        </li>
+    }
+
+</ul>

@@ -63,14 +63,7 @@ namespace DoAn.Email
                 Subject = subject,
                 Body = htmlMessage
             });
-            //MailContent content = new MailContent
-            //{
-            //    To = "pda011199@gmail.com",
-            //    Subject = "Testing",
-            //    Body = "Hello word"
-            //};
-            //await sendmail.SendMail(content);
-            //return RedirectToAction(nameof(HomeController.Index), "Home");
+            
         }
     }
 }

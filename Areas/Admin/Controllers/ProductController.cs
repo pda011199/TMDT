@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DoAn.Controllers
 {
+    [Area("Admin")]
     public class ProductController : Controller
     {
         DataContext data;
@@ -67,12 +68,6 @@ namespace DoAn.Controllers
                 return View(productModel);
             }
         }
-        [HttpGet("Product/{id}/{name}")]
-        public IActionResult Detail(int id)
-        {
-            SanPham sp = data.SanPham.FirstOrDefault(p => p.MaSp == id);
-            sp.LoaiSp = data.LoaiSp.Find(sp.MaLoaiSp);
-            return View(sp);
-        }
+        
     }
 }

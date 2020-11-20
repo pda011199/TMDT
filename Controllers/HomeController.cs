@@ -76,5 +76,12 @@ namespace DoAn.Controllers
             ViewBag.truyen = truyen;
             return View();
         }
+        [HttpGet("Home/{id}/{name}")]
+        public IActionResult Detail(int id)
+        {
+            SanPham sp = context.SanPham.FirstOrDefault(p => p.MaSp == id);
+            sp.LoaiSp = context.LoaiSp.Find(sp.MaLoaiSp);
+            return View(sp);
+        }
     }
 }

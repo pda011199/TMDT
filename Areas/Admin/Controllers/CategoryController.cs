@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DoAn.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         DataContext data;

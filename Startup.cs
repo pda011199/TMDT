@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DoAn.Email;
 using DoAn.Models;
 using DoAn.Models.Domain;
@@ -9,10 +10,12 @@ using DoAn.Models.Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace DoAn
 {
@@ -35,6 +38,14 @@ namespace DoAn
             var mailsettings = Configuration.GetSection("MailSettings");
             services.Configure<MailSettings>(mailsettings);
             services.AddTransient<ISendMailService, SendMailService>();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddIdentity<User, IdentityRole>(opt =>
+             {
+                 opt.Password.RequiredLength = 8;
+                 opt.Password.RequireDigit = false;
+                 opt.Password.RequireUppercase = false;
+                 opt.Password.RequireNonAlphanumeric = false;
+             }).AddEntityFrameworkStores<DataContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,13 +67,23 @@ namespace DoAn
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "MyArea",
+                    pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}");
+
+
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
+            
+            
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "CheckAccount";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Điền thông tin cá nhân</h1>
+<form asp-action="CheckOutWithoutSignIn" asp-controller="Cart">
+    <div class="form-group">
+        <label class="control-label">Họ và tên: </label>
+        <input class="form-control" name="hoTen" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Email: </label>
+        <input class="form-control" name="eMail" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Địa chỉ: </label>
+        <input class="form-control" name="diaChi" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Số điện thoại: </label>
+        <input class="form-control" name="sDT" />
+    </div>
+    <button type="submit">Đồng ý</button>
+</form>
