@@ -78,7 +78,7 @@ namespace DoAn.Migrations
                     b.Property<double>("TongTien")
                         .HasColumnType("float");
 
-                    b.Property<bool>("TrangThai")
+                    b.Property<bool?>("TrangThai")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserId")
@@ -247,15 +247,15 @@ namespace DoAn.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "832e4d3d-7712-4d0f-912c-e58e2601ebd4",
-                            ConcurrencyStamp = "0e2f4614-f485-4cd7-b907-dd9db2efd1a6",
+                            Id = "224c573a-41c1-43f4-b416-f0601ee4f24c",
+                            ConcurrencyStamp = "f040131a-de3f-4b5b-8420-8adca1abe3b6",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "1882dae3-b94e-4399-96ef-65d2a7bebea6",
-                            ConcurrencyStamp = "dfb3d1a9-b3ea-47bc-bdcb-ba16c4171e04",
+                            Id = "bfa93d5f-5a2c-4fef-8e6e-0c481a9a1f80",
+                            ConcurrencyStamp = "af074b82-b381-486c-a97a-8af8c89cded4",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

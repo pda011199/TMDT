@@ -1,0 +1,51 @@
+﻿@model DoAn.Models.Domain.User;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Thong tin ca nhan</h1>
+<div>
+    <dl>
+        <dt>Họ và tên:</dt>
+        <dd>@ViewBag.user.HoTen</dd>
+        <dt>Email:</dt>
+        <dd>@ViewBag.user.Email</dd>
+        <dt>Số điện thoại:</dt>
+        <dd>@ViewBag.user.PhoneNumber</dd>
+        <dt>Địa chỉ:</dt>
+        <dd>@ViewBag.user.DiaChi</dd>
+    </dl>
+</div>
+<div>
+    <table class="table-bordered table">
+        <tr>
+            <td>Mã hóa đơn</td>
+            <td>Ngày</td>
+            <td>Tổng tiền</td>
+            <td>Trạng thái</td>
+        </tr>
+        @foreach (var item in ViewBag.hoaDon)
+        {
+            <tr>
+                <th>@item.MaHD</th>
+                <th>@item.Ngay</th>
+                <th>@item.TongTien</th>
+                @if (item.TrangThai == null)
+                {
+                    <th>Đang chờ</th>
+                    <th><a asp-controller="Account" asp-action="CancelPurchase" asp-route-id="@item.MaHD" >Hủy</a></th>
+                }
+                @if(item.TrangThai == false)
+                {
+                    <th>Đã hủy</th>
+                }
+                @if(item.TrangThai == true)
+                {
+                    <th>Thành công</th>
+                }
+            </tr>
+        }
+
+    </table>
+</div>

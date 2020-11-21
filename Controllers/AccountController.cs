@@ -6,7 +6,7 @@ using AutoMapper;
 using DoAn.Helper;
 using DoAn.Models;
 using DoAn.Models.Domain;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,11 +17,13 @@ namespace DoAn.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
-        public AccountController(UserManager<User> userManager,IMapper mapper, SignInManager<User> signInManager)
+        private readonly DataContext data;
+        public AccountController(UserManager<User> userManager,IMapper mapper, SignInManager<User> signInManager, DataContext data)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            this.data = data;
         }
         [HttpGet]
         public IActionResult Register()
@@ -90,6 +92,26 @@ namespace DoAn.Controllers
                 return Redirect(returnUrl);
             else
                 return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        public async Task<IActionResult> DetailUserAsync()
+        {
+            User user = await _userManager.GetUserAsync(User);
+            ViewBag.user = user;
+            ViewBag.hoaDon = data.HoaDon.Where(p => p.UserId == user.Id).ToList();
+            return View();
+        }
+        [HttpGet("Account/{id}")]
+        public async Task<IActionResult> CancelPurchaseAsync(int id)
+        {
+            HoaDon hd = data.HoaDon.Where(p=> p.MaHD == id).FirstOrDefault();
+            hd.TrangThai = false;
+            data.Entry(hd).State = EntityState.Modified;
+            data.SaveChanges();
+
+            User user = await _userManager.GetUserAsync(User);
+            ViewBag.user = user;
+            ViewBag.hoaDon = data.HoaDon.Where(p => p.UserId == user.Id).ToList();
+            return RedirectToAction("DetailUser","Account");
         }
     }
 }

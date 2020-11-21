@@ -180,7 +180,7 @@ namespace DoAn.Migrations
                     TongTien = table.Column<double>(type: "float", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SDT = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrangThai = table.Column<bool>(type: "bit", nullable: false),
+                    TrangThai = table.Column<bool>(type: "bit", nullable: true),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -253,12 +253,12 @@ namespace DoAn.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "832e4d3d-7712-4d0f-912c-e58e2601ebd4", "0e2f4614-f485-4cd7-b907-dd9db2efd1a6", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "224c573a-41c1-43f4-b416-f0601ee4f24c", "f040131a-de3f-4b5b-8420-8adca1abe3b6", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1882dae3-b94e-4399-96ef-65d2a7bebea6", "dfb3d1a9-b3ea-47bc-bdcb-ba16c4171e04", "Customer", "CUSTOMER" });
+                values: new object[] { "bfa93d5f-5a2c-4fef-8e6e-0c481a9a1f80", "af074b82-b381-486c-a97a-8af8c89cded4", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

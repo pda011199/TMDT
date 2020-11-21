@@ -339,3 +339,5 @@ D:\Bài tập\Thương mại điện tử\DoAn\DoAn\obj\Debug\netcoreapp3.1\Razo
 D:\Bài tập\Thương mại điện tử\DoAn\DoAn\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category\Index.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\DoAn\DoAn\obj\Debug\netcoreapp3.1\Razor\Views\Home\Detail.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\DoAn\DoAn\obj\Debug\netcoreapp3.1\Razor\Views\Cart\AddInformation.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\DoAn\DoAn\obj\Debug\netcoreapp3.1\Razor\Views\Account\DetailUser.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\DoAn\DoAn\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CartAdmin\Index.cshtml.g.cs

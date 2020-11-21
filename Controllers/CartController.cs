@@ -100,6 +100,10 @@ namespace DoAn.Controllers
                     Deleted = false,
                     TongTien = sum,
                     Ngay = DateTime.Now,
+                    SDT=user.PhoneNumber,
+                    Email = user.Email,
+                    DiaChi = user.DiaChi,
+                    HoTen = user.HoTen
                 };
                 data.HoaDon.Add(hd);
                 data.SaveChanges();
@@ -181,5 +185,7 @@ namespace DoAn.Controllers
             }
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+
     }
 }

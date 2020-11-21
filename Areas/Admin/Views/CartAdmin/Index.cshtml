@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Index</h1>
+<table>
+    <tr>
+        <th>Mã hóa đơn</th>
+        <th>Họ và tên</th>
+        <th>Email</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in ViewBag.hoaDon)
+    {
+        <tr>
+            <td>@item.MaHD</td>
+            <td>@item.HoTen</td>
+            <td>@item.Email</td>
+            <td>@item.SDT</td>
+            <td>@item.DiaChi</td>
+            <td>@item.TongTien</td>
+            @if (item.TrangThai == null)
+            {
+                <td>Đang chờ</td>
+                <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Hủy</a></td>
+                <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Đồng ý</a></td>
+            }
+            @if (item.TrangThai == false)
+            {
+                <td>Đã hủy</td>
+            }
+            @if (item.TrangThai == true)
+            {
+                <td>Thành công</td>
+            }
+        </tr>
+    }
+</table>
