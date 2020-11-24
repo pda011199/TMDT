@@ -89,7 +89,7 @@
                                     <form asp-action="Update" asp-controller="Cart" asp-route-id="@item.SanPham.MaSp">
                                         <input class="input-number" type="number" name="soLuong" value="@item.SoLuong" min="1" max="@item.SanPham.SoLuong">
                                         <input type="hidden" name="id" value="@item.SanPham.MaSp" />
-                                        <input class="btn_3" type="submit" value="Update" />
+                                        <input class="btn-primary" type="submit" value="Update" />
                                     </form>
                                     <p><a asp-controller="cart" asp-action="Remove" asp-route-id="@item.SanPham.MaSp">Remove</a></p>
                                 </td>

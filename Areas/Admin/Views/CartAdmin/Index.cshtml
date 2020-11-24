@@ -35,8 +35,8 @@
         @if (item.TrangThai == null)
         {
 <td>Đang chờ</td>
-                    <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Đồng ý</a></td>
-                                        <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Hủy</a></td>
+                    <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
+                                        <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
 }
         @if (item.TrangThai == false)
         {
