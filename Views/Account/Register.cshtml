@@ -1,56 +1,88 @@
 ﻿@model DoAn.Models.UserRegisterModel
-@{
-    ViewData["title"] = "Register";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
+@{ ViewData["title"] = "Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml"; }
 
-<h1>Register</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register" asp-controller="Account" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="HoTen" class="control-label"></label>
-                <input asp-for="HoTen" class="form-control" />
-                <span asp-validation-for="HoTen" class="text-danger"></span>
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Home / Login</p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DiaChi" class="control-label"></label>
-                <input asp-for="DiaChi" class="form-control" />
-                <span asp-validation-for="DiaChi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<!-- breadcrumb start-->
+<!--================login_part Area =================-->
+<section class="login_part section_padding">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_text text-center">
+                    <div class="login_part_text_iner">
+                        <h2>Bạn đã có tài khoản?</h2>
+                        <p>
+                            Hãy đăng nhập ngay!
+                        </p>
+                        <a class="btn_3" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_form">
+                    <div class="login_part_form_iner">
+                        <h3>
+                            Chào mừng trở lại ! <br>
+                            Hãy đăng nhập ngay
+                        </h3>
+                        <form class="row contact_form" asp-action="Register" asp-controller="Account" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" asp-for="HoTen" placeholder="Họ tên">
+                                <span asp-validation-for="HoTen" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" asp-for="DiaChi" placeholder="Địa chỉ">
+                                <span asp-validation-for="DiaChi" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Số điện thoại">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" asp-for="Email" placeholder="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="password" class="form-control" asp-for="Password" placeholder="Mật khẩu">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Xác nhận mật khẩu">
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="form-group">
+                                    <input type="submit" value="Đăng ký" class="btn_3" />
+                                </div>
+                                @*<button type="submit" value="submit" class="btn_3">
+                                        log in
+                                    </button>*@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================login_part end =================-->
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

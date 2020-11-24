@@ -85,6 +85,9 @@ namespace DoAn.Controllers
         }
         public IActionResult AddInformation()
         {
+            var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
+            ViewBag.cart = cart;
+            ViewBag.total = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
             return View();
         }
         public async Task<IActionResult> CheckOutWithSignInAsync()

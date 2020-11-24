@@ -47,7 +47,7 @@
                         </button>
 
                         <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
-                           
+
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="Home" asp-action="Index">Trang chủ</a>
@@ -58,9 +58,9 @@
                                         Truyện
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-id="3">Manga</a>
-                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-id="3">Comic</a>
-                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-id="3">Other</a>
+                                        <a class="dropdown-item" asp-controller="CustomerCate" asp-action="Index" asp-route-id="1">Manga</a>
+                                        <a class="dropdown-item" asp-controller="CustomerCate" asp-action="Index" asp-route-id="2">Comic</a>
+                                        <a class="dropdown-item" asp-controller="CustomerCate" asp-action="Index" asp-route-id="3">Other</a>
                                     </div>
                                 </li>
 
@@ -72,7 +72,7 @@
                                     <a class="nav-link" href="contact.html">Liên hệ</a>
                                 </li>
                                 <partial name="_LoginPartial" />
-                                
+
                             </ul>
                         </div>
                         <div class="hearer_icon d-flex">

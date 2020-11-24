@@ -1,45 +1,54 @@
 ﻿
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
-<h1>Index</h1>
-<table>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Tình trạng đơn hàng</h1>
+</div>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
+            <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Họ và tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.hoaDon)
+                {
     <tr>
-        <th>Mã hóa đơn</th>
-        <th>Họ và tên</th>
-        <th>Email</th>
-        <th>Số điện thoại</th>
-        <th>Địa chỉ</th>
-        <th>Tổng tiền</th>
-        <th>Trạng thái</th>
-        <th></th>
-        <th></th>
+        <td>@item.MaHD</td>
+        <td>@item.HoTen</td>
+        <td>@item.Email</td>
+        <td>@item.SDT</td>
+        <td>@item.DiaChi</td>
+        <td>@item.TongTien</td>
+        @if (item.TrangThai == null)
+        {
+<td>Đang chờ</td>
+                    <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Đồng ý</a></td>
+                                        <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Hủy</a></td>
+}
+        @if (item.TrangThai == false)
+        {
+<td>Đã hủy</td>
+}
+        @if (item.TrangThai == true)
+        {
+<td>Thành công</td>
+}
     </tr>
-    @foreach (var item in ViewBag.hoaDon)
-    {
-        <tr>
-            <td>@item.MaHD</td>
-            <td>@item.HoTen</td>
-            <td>@item.Email</td>
-            <td>@item.SDT</td>
-            <td>@item.DiaChi</td>
-            <td>@item.TongTien</td>
-            @if (item.TrangThai == null)
-            {
-                <td>Đang chờ</td>
-                <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Hủy</a></td>
-                <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Đồng ý</a></td>
-            }
-            @if (item.TrangThai == false)
-            {
-                <td>Đã hủy</td>
-            }
-            @if (item.TrangThai == true)
-            {
-                <td>Thành công</td>
-            }
-        </tr>
-    }
-</table>
+}
+            </tbody>
+        </table>
+    </div>
+</div>

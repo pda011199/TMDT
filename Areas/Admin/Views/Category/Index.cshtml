@@ -1,24 +1,25 @@
 ﻿
-@{
-    ViewData["Title"] = "Category";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
+@{ ViewData["Title"] = "Category";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 @model List<DoAn.Models.Domain.LoaiSp>
-<p><a class="btn btn-primary" asp-action="Add" asp-controller="Category">Add</a></p>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh sách thể loại</h1>
+</div>
+<p><a class="btn btn-primary" asp-action="Add" asp-controller="Category">Thêm thể loại</a></p>
 <table class="table">
     <thead>
         <tr>
-            <td>MaLoaiSp</td>
-            <td>TenLoaiSp</td>
+            <td>Mã thể loại</td>
+            <td>Tên thể loại</td>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.MaLoaiSp</td>
-                <td>@item.TenLoaiSp</td>
-            </tr>
-        }
+<tr>
+    <td>@item.MaLoaiSp</td>
+    <td>@item.TenLoaiSp</td>
+</tr>}
     </tbody>
 </table>

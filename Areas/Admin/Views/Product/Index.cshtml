@@ -1,113 +1,51 @@
 ﻿
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
-<!-- breadcrumb start-->
-<section class="breadcrumb breadcrumb_bg">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <div class="breadcrumb_iner">
-                    <div class="breadcrumb_iner_item">
-                        <p>Home / Category</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+</div>
+<a asp-controller="Product" asp-action="Add" class="btn btn-primary">Thêm Sản Phẩm</a>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
+            <thead>
+                <tr style="text-align:center">
+                    <th>ID</th>
+                    <th>Hình Ảnh</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá Tiền</th>
+                    <th>Loại truyện</th>
+                    <th>Số lượng</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <th>@item.MaSp</th>
+        <th><img src="~/images/@item.HinhAnh" style="width:150px;height:100px" /></th>
+        <th>@item.TenSp</th>
+        <th>@item.Gia</th>
+        <th>@item.LoaiSp.TenLoaiSp</th>
+        <th>@item.SoLuong</th>
+        <th style="text-align:center">
+            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.MaSp" class="btn btn-outline-danger">Xoá</a>
+            <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.MaSp" class="btn btn-outline-warning">Sửa</a>
+        </th>
+    </tr>}
+
+            </tbody>
+        </table>
+        @*<div style="text-align:center">
+                @for (int i = 0; i < ViewBag.count; i++)
+                {
+                    <a asp-controller="Product" asp-action="Index" asp-route-id="@i" class="btn btn-outline-primary">@i</a>
+                }
+            </div>*@
+
     </div>
-</section>
-<!-- breadcrumb start-->
-<!--================Category Product Area =================-->
-<section class="cat_product_area section_padding border_top">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="left_sidebar_area">
-                    <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
-                        <div class="l_w_title">
-                            <h3>Lọc sản phẩm</h3>
-                        </div>
-                        <div class="widgets_inner">
-                            <ul class="list">
-                                @*<p>Brands</p>*@
-                                <li>
-                                    <input type="radio" aria-label="Radio button for following text input">
-                                    <a href="#">Theo hãng</a>
-                                </li>
-                                <li>
-                                    <input type="radio" aria-label="Radio button for following text input">
-                                    <a asp-controller="Home" asp-action="SortByName">Theo tên</a>
-                                </li>
-                                <li class="active">
-                                    <input type="radio" aria-label="Radio button for following text input">
-                                    <a asp-controller="Home" asp-action="SortByPrice">Theo giá (Tăng dần)</a>
-                                </li>
-                                <li class="active">
-                                    <input type="radio" aria-label="Radio button for following text input">
-                                    <a asp-controller="Home" asp-action="SortByPriceDesc">Theo giá (Giảm dần)</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </aside>
-
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="product_top_bar d-flex justify-content-between align-items-center">
-                            <div class="single_product_menu product_bar_item">
-                                <h2>Truyện</h2>
-                            </div>
-                            <div class="product_top_bar_iner product_bar_item d-flex">
-                                @*<div class="product_bar_single">
-                                    <select class="wide">
-                                        <option data-display="Default sorting">Default sorting</option>
-                                        <option value="1">Some option</option>
-                                        <option value="2">Another option</option>
-                                        <option value="3">Potato</option>
-                                    </select>
-                                </div>
-                                <div class="product_bar_single">
-                                    <select>
-                                        <option data-display="Show 12">Show 12</option>
-                                        <option value="1">Show 20</option>
-                                        <option value="2">Show 30</option>
-                                    </select>
-                                </div>*@
-                            </div>
-                        </div>
-                    </div>
-
-                    @foreach (var item in Model)
-                    {
-
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="single_category_product">
-                                <div class="single_category_img">
-                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.MaSp" asp-route-name="@item.TenSp"><img src="~/images/@item.HinhAnh" alt=""></a>
-                                    <div class="category_social_icon">
-                                        <ul>
-                                            <li><a href="#"><i class="ti-heart"></i></a></li>
-                                            <li><a href="#"><i class="ti-bag"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="category_product_text">
-                                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.MaSp" asp-route-name="@item.TenSp"><h5>@item.TenSp</h5></a>
-                                        <p>@item.Gia VNĐ</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <div class="col-lg-12 text-center">
-                        <a asp-action="Add" asp-controller="Product" asp-area="Admin" class="btn_2">More Items</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--================End Category Product Area =================-->
+</div>

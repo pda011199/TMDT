@@ -1,58 +1,58 @@
 ﻿@model DoAn.Models.Domain.SanPham;
-@{
-    ViewData["Title"] = "Product Add";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
-}
-<h1>Add Product</h1>
+@{ ViewData["Title"] = "Product Add";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thêm sản phẩm</h1>
+</div>
 <hr />
 <div class="row">
     <div class="col-md-10">
         <form asp-action="Add" asp-controller="Product" method="post" enctype="multipart/form-data">
             <div class="form-group row">
-                <label asp-for="TenSp" class="col-sm-3 col-form-label"></label>
+                <label class="col-sm-3 col-form-label">Tên sản phẩm</label>
                 <div class="col-sm-6">
                     <input asp-for="TenSp" class="form-control" />
                 </div>
                 <span asp-validation-for="TenSp" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label asp-for="MaLoaiSp" class="col-sm-3 col-form-label"></label>
+                <label class="col-sm-3 col-form-label">Thể loại</label>
                 <div class="col-sm-6">
                     <select asp-for="MaLoaiSp" asp-items="@(new SelectList(ViewBag.Category,"MaLoaiSp","TenLoaiSp"))">
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="Mota" class="col-sm-3 col-form-label"></label>
+                <label class="col-sm-3 col-form-label">Mô tả</label>
                 <div class="col-sm-6">
                     <input asp-for="Mota" class="form-control" />
                 </div>
                 <span asp-validation-for="Mota" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label asp-for="Gia" class="col-sm-3 col-form-label"></label>
+                <label class="col-sm-3 col-form-label">Giá tiền</label>
                 <div class="col-sm-6">
                     <input asp-for="Gia" class="form-control" />
                 </div>
                 <span asp-validation-for="Gia" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label asp-for="SoLuong" class="col-sm-3 col-form-label"></label>
+                <label class="col-sm-3 col-form-label">Số lượng</label>
                 <div class="col-sm-6">
                     <input asp-for="SoLuong" class="form-control" />
                 </div>
                 <span asp-validation-for="SoLuong" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Image</label>
+                <label class="col-sm-3 col-form-label">Hình ảnh</label>
                 <div class="col-sm-6">
                     <input class="form-control" type="file" name="photo" />
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Thêm sản phẩm" class="btn btn-primary" />
             </div>
-            <a asp-action="Index">Back to list</a>
+            <a asp-action="Index">Quay vềt</a>
         </form>
     </div>
 </div>
