@@ -7,6 +7,7 @@ using DoAn.Models;
 using DoAn.Models.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoAn.Controllers
 {
@@ -20,7 +21,7 @@ namespace DoAn.Controllers
         }
         public IActionResult Index()
         {
-            List<SanPham> ds = data.SanPham.ToList();
+            List<SanPham> ds = data.SanPham.Where(p => p.Deleted == false && p.LoaiSp.Deleted == false).ToList();
             foreach(SanPham item in ds)
             {
                 item.LoaiSp = data.LoaiSp.Find(item.MaLoaiSp);
@@ -31,7 +32,7 @@ namespace DoAn.Controllers
         public IActionResult Add()
         {
             SanPham sp = new SanPham();
-            ViewBag.Category = data.LoaiSp.ToList();
+            ViewBag.Category = data.LoaiSp.Where(p=> p.Deleted == false).ToList();
             return View(sp);
         }
         [HttpPost]
@@ -58,7 +59,7 @@ namespace DoAn.Controllers
                 newProduct.SoLuong = productModel.SoLuong;
                 newProduct.NgayTao = DateTime.Now;
                 newProduct.Deleted = false;
-
+                newProduct.LoaiSp = data.LoaiSp.Find(productModel.MaLoaiSp);
                 data.SanPham.Add(newProduct);
                 data.SaveChanges();
                 return RedirectToAction("Index", "Product");
@@ -67,6 +68,41 @@ namespace DoAn.Controllers
             {
                 return View(productModel);
             }
+        }
+        public IActionResult Delete(int id)
+        {
+            SanPham sp = data.SanPham.Find(id);
+
+            return View(sp);
+        }
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeleteConfirm(int id)
+        {
+            SanPham sp = data.SanPham.Find(id);
+            sp.Deleted = true;
+            data.Entry(sp).State = EntityState.Modified;
+            data.SaveChanges();
+            return RedirectToAction("Index","Product");
+        }
+        public IActionResult Edit(int id)
+        {
+            SanPham sp = data.SanPham.Find(id);
+            return View(sp);
+        }
+        [HttpPost, ActionName("Edit")]
+        public IActionResult EditConfirm(int id, SanPham sanPham)
+        {
+            if(ModelState.IsValid)
+            {
+                SanPham sp = data.SanPham.Find(id);
+                sp.TenSp = sanPham.TenSp;
+                sp.Mota = sanPham.Mota;
+                sp.Gia = sanPham.Gia;
+
+                ViewBag.Status = 1;
+            }
+            data.SaveChanges();
+            return View(sanPham);
         }
         
     }

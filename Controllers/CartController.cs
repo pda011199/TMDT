@@ -8,6 +8,7 @@ using DoAn.Helper;
 using DoAn.Models;
 using Microsoft.AspNetCore.Identity;
 using DoAn.Models.Email;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoAn.Controllers
 {
@@ -126,6 +127,12 @@ namespace DoAn.Controllers
                         "<td>"+item.SoLuong+"</td>" +
                         "<td>" + item.SanPham.Gia + "</td>"+
                         "<td>" + item.SoLuong*item.SanPham.Gia + "</td>";
+
+
+                    var sp = data.SanPham.Find(item.SanPham.MaSp);
+                    sp.SoLuong -= item.SoLuong;
+                    data.Entry(sp).State = EntityState.Modified;
+
                     data.CTHoaDon.Add(cthd);
                     data.SaveChanges();
                 }
@@ -146,6 +153,8 @@ namespace DoAn.Controllers
             {
                 var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
                 double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
+
+                //tao hoa don
                 HoaDon hd = new HoaDon
                 {
                     HoTen=hoTen,
@@ -164,6 +173,7 @@ namespace DoAn.Controllers
                     "<th>Thành tiền</th></tr><tr>";
                 foreach (var item in cart)
                 {
+                    //Tao chi tiet hoa don 
                     CT_HoaDon cthd = new CT_HoaDon
                     {
                         MaHD = hd.MaHD,
@@ -174,6 +184,13 @@ namespace DoAn.Controllers
                         "<td>" + item.SoLuong + "</td>" +
                         "<td>" + item.SanPham.Gia + "</td>" +
                         "<td>" + item.SoLuong * item.SanPham.Gia + "</td>";
+
+                    //Update so luong cua san pham
+                    var sp = data.SanPham.Find(item.SanPham.MaSp);
+                    sp.SoLuong -= item.SoLuong;
+                    data.Entry(sp).State = EntityState.Modified;
+
+
                     data.CTHoaDon.Add(cthd);
                     data.SaveChanges();
                 }

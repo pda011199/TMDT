@@ -21,7 +21,7 @@ namespace DoAn.Controllers
         public IActionResult Index()
         {
             List<LoaiSp> ds = new List<LoaiSp>();
-            ds = data.LoaiSp.ToList();
+            ds = data.LoaiSp.Where(p => p.Deleted == false).ToList();
             return View(ds);
         }
         [HttpGet]
@@ -35,6 +35,7 @@ namespace DoAn.Controllers
         {
             if(ModelState.IsValid)
             {
+                lsp.Deleted = false;
                 data.LoaiSp.Add(lsp);
                 data.SaveChanges();
                 return RedirectToAction("Index", "Category");
@@ -44,7 +45,39 @@ namespace DoAn.Controllers
                 return View(lsp);
             }
         }
+        public IActionResult Delete(int id)
+        {
+            LoaiSp lsp = data.LoaiSp.Find(id);
 
+            return View(lsp);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirm(int id)
+        {
+            LoaiSp lsp = data.LoaiSp.Find(id);
+            lsp.Deleted = true;
+            data.Entry(lsp).State = EntityState.Modified;
+            data.SaveChanges();
+            return RedirectToAction("Index", "Category");
+        }
+        public IActionResult Edit(int id)
+        {
+            LoaiSp lsp = data.LoaiSp.Find(id);
+            return View(lsp);
+        }
+        [HttpPost, ActionName("Edit")]
+        public IActionResult EditConfirm(int id, LoaiSp loaiSanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                LoaiSp lsp = data.LoaiSp.Find(id);
+                lsp.TenLoaiSp = loaiSanPham.TenLoaiSp;
+
+                ViewBag.Status = 1;
+            }
+            data.SaveChanges();
+            return View(loaiSanPham);
+        }
 
     }
 }

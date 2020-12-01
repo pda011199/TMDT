@@ -9062,19 +9062,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Duy Tan\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Study\\4TH YEAR\\Thương mại điện tử\\Project\\TMDT\\DoAn.csproj",
+      "projectUniqueName": "D:\\Bài tập\\Thương mại điện tử\\TMDT\\DoAn.csproj",
       "projectName": "DoAn",
-      "projectPath": "D:\\Study\\4TH YEAR\\Thương mại điện tử\\Project\\TMDT\\DoAn.csproj",
-      "packagesPath": "C:\\Users\\Duy Tan\\.nuget\\packages\\",
-      "outputPath": "D:\\Study\\4TH YEAR\\Thương mại điện tử\\Project\\TMDT\\obj\\",
+      "projectPath": "D:\\Bài tập\\Thương mại điện tử\\TMDT\\DoAn.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "D:\\Bài tập\\Thương mại điện tử\\TMDT\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Duy Tan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9159,7 +9159,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   },

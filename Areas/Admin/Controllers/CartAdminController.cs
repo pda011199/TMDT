@@ -31,6 +31,15 @@ namespace DoAn.Areas.Admin.Controllers
             data.Entry(hd).State = EntityState.Modified;
             data.SaveChanges();
 
+            List<CT_HoaDon> ct_hd = data.CTHoaDon.Where(p => p.MaHD == id).ToList();
+            foreach (var item in ct_hd)
+            {
+                SanPham sp = data.SanPham.Find(item.MaSp);
+                sp.SoLuong += item.SoLuong;
+                data.Entry(sp).State = EntityState.Modified;
+                data.SaveChanges();
+            }
+
             ViewBag.hoaDon = data.HoaDon.ToList();
             return View("Index");
         }
@@ -41,7 +50,6 @@ namespace DoAn.Areas.Admin.Controllers
             hd.TrangThai = true;
             data.Entry(hd).State = EntityState.Modified;
             data.SaveChanges();
-
             ViewBag.hoaDon = data.HoaDon.ToList();
             return View("Index");
         }

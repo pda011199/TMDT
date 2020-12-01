@@ -10,8 +10,9 @@
 <table class="table">
     <thead>
         <tr>
-            <td>Mã thể loại</td>
-            <td>Tên thể loại</td>
+            <th>Mã thể loại</th>
+            <th>Tên thể loại</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,10 @@
 <tr>
     <td>@item.MaLoaiSp</td>
     <td>@item.TenLoaiSp</td>
+    <td style="text-align:center">
+        <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.MaLoaiSp" class="btn btn-outline-danger">Xoá</a>
+        <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.MaLoaiSp" class="btn btn-outline-warning">Sửa</a>
+    </td>
 </tr>}
     </tbody>
 </table>

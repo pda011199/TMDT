@@ -11,7 +11,7 @@ namespace DoAn.Models.Domain
         [Key]
         public int MaLoaiSp { get; set; }
         public string TenLoaiSp { get; set; }
-       
+        public bool Deleted { get; set; }
         public List<SanPham> SanPhams { get; set; }
     }
 }

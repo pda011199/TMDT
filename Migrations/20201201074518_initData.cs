@@ -54,7 +54,8 @@ namespace DoAn.Migrations
                 {
                     MaLoaiSp = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenLoaiSp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TenLoaiSp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -253,12 +254,12 @@ namespace DoAn.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "26efaca7-1676-4ea1-90e4-3934581495e7", "8416b0e5-ca26-41bd-b3b8-77258dcde208", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "34f2c88e-c98f-4368-b86f-07fa8d771346", "a7554d49-7b3a-42a0-89ec-f46ee0156d62", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cf94479a-026a-49aa-b3e8-3235f3bc4c7b", "f1220c9c-ea81-4b6d-ae3b-ba598f0e99bb", "Customer", "CUSTOMER" });
+                values: new object[] { "fc4ad5ec-7714-4320-8af2-9255c65ec291", "03f0fcf1-0b3a-4fed-90fd-49fe71d3521c", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
