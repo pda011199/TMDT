@@ -113,5 +113,25 @@ namespace DoAn.Controllers
             ViewBag.hoaDon = data.HoaDon.Where(p => p.UserId == user.Id).ToList();
             return RedirectToAction("DetailUser","Account");
         }
+        public async Task<IActionResult> EditUserAsync()
+        {
+            User user = await _userManager.GetUserAsync(User);
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditUserConfirmAsync( User user)
+        {
+            if (ModelState.IsValid)
+            {
+                User us = await _userManager.GetUserAsync(User);
+                us.HoTen = user.HoTen;
+                us.DiaChi = user.DiaChi;
+                us.PhoneNumber = user.PhoneNumber;
+                await _userManager.UpdateAsync(us);
+                ViewBag.Status = 1;
+
+            }
+            return View("EditUser",user);
+        }
     }
 }

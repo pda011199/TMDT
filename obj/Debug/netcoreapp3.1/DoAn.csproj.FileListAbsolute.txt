@@ -712,3 +712,4 @@ D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Are
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category\Edit.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category\Delete.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\User\Index.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\EditUser.cshtml.g.cs
