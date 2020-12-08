@@ -250,15 +250,15 @@ namespace DoAn.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "34f2c88e-c98f-4368-b86f-07fa8d771346",
-                            ConcurrencyStamp = "a7554d49-7b3a-42a0-89ec-f46ee0156d62",
+                            Id = "cc09a7c0-d242-4635-92db-63884b5626a2",
+                            ConcurrencyStamp = "d7ddd604-5415-4209-942a-bdfd4984792b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "fc4ad5ec-7714-4320-8af2-9255c65ec291",
-                            ConcurrencyStamp = "03f0fcf1-0b3a-4fed-90fd-49fe71d3521c",
+                            Id = "f1726c30-18cc-47dc-a28c-db5598314e0a",
+                            ConcurrencyStamp = "1f2b5f8f-24ab-4768-9fa5-8485c8c196df",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

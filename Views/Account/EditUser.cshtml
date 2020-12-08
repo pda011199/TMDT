@@ -1,41 +1,59 @@
 ﻿@model DoAn.Models.Domain.User
 @{
-    ViewData["Title"] = "EditUser";
+    ViewData["Title"] = "Thay đổi thông tin";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>Edit</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditUserConfirm" asp-controller="Account" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="HoTen" class="control-label"></label>
-                <input asp-for="HoTen" class="form-control" />
-                <span asp-validation-for="HoTen" class="text-danger"></span>
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Home/ User/ Edit</p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DiaChi" class="control-label"></label>
-                <textarea rows="6" asp-for="DiaChi" class="form-control"></textarea>
-                <span asp-validation-for="DiaChi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-            @if (ViewBag.Status == 1)
-            {
-                <p class="text-warning"> Thay đổi thành công!</p>
-            }
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<!-- breadcrumb start-->
 
-<div>
-    <a asp-action="DetailUser" asp-controller="Account">Quay lại</a>
+<br />
+
+<div class="container">
+    <h2 style="text-align:center; font-weight:bold">Chỉnh sửa thông tin cá nhân</h2>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <form asp-action="EditUserConfirm" asp-controller="Account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="HoTen" class="control-label">Họ tên</label>
+                    <input asp-for="HoTen" class="form-control" />
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label">Số điện thoại</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DiaChi" class="control-label">Email</label>
+                    <textarea rows="6" asp-for="DiaChi" class="form-control"></textarea>
+                    <span asp-validation-for="DiaChi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                    <a asp-controller="Account" asp-action="DetailUser" class="btn btn-light">Quay về</a>
+                </div>
+                @if (ViewBag.Status == 1)
+                {
+                    <p class="text-warning"> Thay đổi thành công!</p>
+                }
+            </form>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
 </div>

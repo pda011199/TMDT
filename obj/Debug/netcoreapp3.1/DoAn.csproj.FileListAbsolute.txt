@@ -713,3 +713,9 @@ D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Are
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category\Delete.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\User\Index.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\EditUser.cshtml.g.cs
+D:\Study\4TH YEAR\Thương mại điện tử\Project\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category\Delete.cshtml.g.cs
+D:\Study\4TH YEAR\Thương mại điện tử\Project\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category\Edit.cshtml.g.cs
+D:\Study\4TH YEAR\Thương mại điện tử\Project\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Product\Delete.cshtml.g.cs
+D:\Study\4TH YEAR\Thương mại điện tử\Project\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Product\Edit.cshtml.g.cs
+D:\Study\4TH YEAR\Thương mại điện tử\Project\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\User\Index.cshtml.g.cs
+D:\Study\4TH YEAR\Thương mại điện tử\Project\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\EditUser.cshtml.g.cs

@@ -1,6 +1,6 @@
 ﻿@model DoAn.Models.Domain.User;
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Thông tin người dùng";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
@@ -24,7 +24,7 @@
 
 <div class="container">
     <h2 style="text-align:center; font-weight:bold">Thông tin cá nhân</h2>
-    <a asp-controller="Account" asp-action="EditUser" class="btn btn-primary">Chỉnh sửa thông tin cá nhân</a>
+    <hr />
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8 col-md-12 col-sm-12">
@@ -53,6 +53,8 @@
                 <dd class="col-sm-10">
                     @ViewBag.user.DiaChi
                 </dd>
+                
+                <a asp-controller="Account" asp-action="EditUser" class="btn btn-primary">Chỉnh sửa thông tin cá nhân</a>
             </dl>
         </div>
         <div class="col-lg-2"></div>
