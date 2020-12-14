@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>@ViewData["Title"] | Comic Corner</title>
     <link rel="icon" href="~/images/favicon1.png">
     <!-- Bootstrap CSS -->
@@ -85,7 +86,7 @@
         </div>
         <div class="search_input" id="search_input_box">
             <div class="container ">
-                <form class="d-flex justify-content-between search-inner" asp-controller="Home" asp-action="Find">
+                <form class="d-flex justify-content-between search-inner" asp-controller="CustomerCate" asp-action="Find">
                     <input type="text" name="tensp" id="tensp" class="form-control" placeholder="Search Here">
                     <button type="submit" class="btn"></button>
                     <span class="ti-close" id="close_search" title="Close Search"></span>
@@ -205,6 +206,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/homeController.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 

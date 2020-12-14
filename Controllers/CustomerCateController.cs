@@ -9,11 +9,10 @@ namespace DoAn.Controllers
 {
     public class CustomerCateController : Controller
     {
-        private readonly DataContext data;
+        private readonly DataContext context;
         public CustomerCateController(DataContext data)
         {
-
-            this.data = data;
+            this.context = data;
         }
         public IActionResult Index(int id)
         {
@@ -21,12 +20,36 @@ namespace DoAn.Controllers
             //if (details.Count.Equals(0)) return NotFound();
             //ViewBag.truyen = details;
             //return View();
-            List<SanPham> ds = data.SanPham.ToList();
+            List<SanPham> ds = context.SanPham.Where(p=>p.Deleted == false).ToList();
             foreach (SanPham item in ds)
             {
-                item.LoaiSp = data.LoaiSp.Find(item.MaLoaiSp);
+                item.LoaiSp = context.LoaiSp.Find(item.MaLoaiSp);
             }
             return View(ds);
+        }
+        public IActionResult SortByName()
+        {
+            List<SanPham> truyen = context.SanPham.OrderBy(s => s.TenSp).Where(p => p.Deleted == false).ToList();
+            ViewBag.truyen = truyen;
+            return View("Index",truyen);
+        }
+        public IActionResult SortByPrice()
+        {
+            List<SanPham> truyen = context.SanPham.OrderBy(s => s.Gia).Where(p => p.Deleted == false).ToList();
+            ViewBag.truyen = truyen;
+            return View("Index",truyen);
+        }
+
+        public IActionResult SortByPriceDesc()
+        {
+            List<SanPham> truyen = context.SanPham.OrderByDescending(s => s.Gia).Where(p => p.Deleted == false).ToList();
+            ViewBag.truyen = truyen;
+            return View("Index",truyen);
+        }
+        public IActionResult Find(string tensp)
+        {
+            List<SanPham> truyen = context.SanPham.Where(s => s.TenSp.Contains(tensp) && s.Deleted == false).ToList();
+            return View("Index",truyen);
         }
     }
 }

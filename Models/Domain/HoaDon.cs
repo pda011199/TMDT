@@ -17,6 +17,8 @@ namespace DoAn.Models.Domain
         public double TongTien { get; set; }
         public string Email { get; set; }
         public string SDT { get; set; }
+        public int LoaiTT { get; set; }//1-thanh toan binh thuong 2-thanh toan bang paypal
+        public bool TinhTrang { get; set; }//da thanh toan  //chua thanh toan
         public Nullable<bool> TrangThai { get; set; }
         public bool Deleted { get; set; }
         public List<CT_HoaDon> CT_HoaDon { get; set; }

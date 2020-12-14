@@ -50,6 +50,40 @@ namespace DoAn.Migrations
                     b.ToTable("CTHoaDon");
                 });
 
+            modelBuilder.Entity("DoAn.Models.Domain.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("MaSp")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Ngay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SanPhamMaSp")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SanPhamMaSp");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("DoAn.Models.Domain.HoaDon", b =>
                 {
                     b.Property<int>("MaHD")
@@ -69,11 +103,17 @@ namespace DoAn.Migrations
                     b.Property<string>("HoTen")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LoaiTT")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Ngay")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SDT")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TinhTrang")
+                        .HasColumnType("bit");
 
                     b.Property<double>("TongTien")
                         .HasColumnType("float");
@@ -148,6 +188,29 @@ namespace DoAn.Migrations
                     b.HasIndex("LoaiSpMaLoaiSp");
 
                     b.ToTable("SanPham");
+                });
+
+            modelBuilder.Entity("DoAn.Models.Domain.SanPhamYeuThich", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MaSp")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SanPhamMaSp")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("SanPhamMaSp");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("SanPhamYeuThich");
                 });
 
             modelBuilder.Entity("DoAn.Models.Domain.User", b =>
@@ -250,15 +313,15 @@ namespace DoAn.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cc09a7c0-d242-4635-92db-63884b5626a2",
-                            ConcurrencyStamp = "d7ddd604-5415-4209-942a-bdfd4984792b",
+                            Id = "ae29d194-c7f4-4111-9d0a-2d7a88eb40e6",
+                            ConcurrencyStamp = "72d1302f-05f8-496c-8bae-ea03f3bbcbdc",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "f1726c30-18cc-47dc-a28c-db5598314e0a",
-                            ConcurrencyStamp = "1f2b5f8f-24ab-4768-9fa5-8485c8c196df",
+                            Id = "1c3130ea-f023-4217-a0b5-93056d61b1e6",
+                            ConcurrencyStamp = "b7361ac1-f32d-4cb3-9b97-fc1afe81b381",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -383,6 +446,21 @@ namespace DoAn.Migrations
                     b.Navigation("SanPham");
                 });
 
+            modelBuilder.Entity("DoAn.Models.Domain.Comment", b =>
+                {
+                    b.HasOne("DoAn.Models.Domain.SanPham", "SanPham")
+                        .WithMany()
+                        .HasForeignKey("SanPhamMaSp");
+
+                    b.HasOne("DoAn.Models.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("SanPham");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DoAn.Models.Domain.HoaDon", b =>
                 {
                     b.HasOne("DoAn.Models.Domain.User", "User")
@@ -399,6 +477,21 @@ namespace DoAn.Migrations
                         .HasForeignKey("LoaiSpMaLoaiSp");
 
                     b.Navigation("LoaiSp");
+                });
+
+            modelBuilder.Entity("DoAn.Models.Domain.SanPhamYeuThich", b =>
+                {
+                    b.HasOne("DoAn.Models.Domain.SanPham", "SanPham")
+                        .WithMany()
+                        .HasForeignKey("SanPhamMaSp");
+
+                    b.HasOne("DoAn.Models.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("SanPham");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

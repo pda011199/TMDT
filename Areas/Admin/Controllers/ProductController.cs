@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DoAn.Models;
 using DoAn.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 namespace DoAn.Controllers
 {
     [Area("Admin")]
+    [Authorize("ADMINISTRATOR")]
+    [Authorize("EMPLOYEE")]
     public class ProductController : Controller
     {
         DataContext data;
@@ -21,8 +24,8 @@ namespace DoAn.Controllers
         }
         public IActionResult Index()
         {
-            List<SanPham> ds = data.SanPham.Where(p => p.Deleted == false && p.LoaiSp.Deleted == false).ToList();
-            foreach(SanPham item in ds)
+            List<SanPham> ds = data.SanPham.Where(p => p.Deleted == false).ToList();
+            foreach(var item in ds)
             {
                 item.LoaiSp = data.LoaiSp.Find(item.MaLoaiSp);
             }

@@ -9,9 +9,12 @@ using DoAn.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DoAn.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -100,7 +103,18 @@ namespace DoAn.Controllers
             ViewBag.hoaDon = data.HoaDon.Where(p => p.UserId == user.Id).ToList();
             return View();
         }
-        [HttpGet("Account/{id}")]
+        public IActionResult ProductFavor()
+        {
+            string user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var dsspyt = data.SanPhamYeuThich.Where(p => p.UserId == user).ToList();
+            foreach (var i in dsspyt)
+            {
+                i.SanPham = data.SanPham.Find(i.MaSp);
+            }
+            ViewBag.spyt = dsspyt;
+            return View();
+        }
+        
         public async Task<IActionResult> CancelPurchaseAsync(int id)
         {
             HoaDon hd = data.HoaDon.Where(p=> p.MaHD == id).FirstOrDefault();

@@ -1,0 +1,62 @@
+﻿@model List<DoAn.Areas.Admin.Models.UserRole>
+
+@{
+    ViewData["Title"] = "EditUsersInRole";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var roleId = ViewBag.roleId;
+}
+<h1>EditUsersInRole</h1>
+
+
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <h2>Thêm hoặc xóa quyền hạn của người dùng</h2>
+        </div>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Tìm người dùng.." title="Nhập tên">
+        <table class="table table-bordered" id="myTable">
+            <tr class="header">
+                <th>Email</th>
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="@Model[i].UserId" />
+                        <input type="hidden" asp-for="@Model[i].UserName" />
+                        <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                        <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                            @Model[i].UserName
+                        </label>
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="card-footer">
+            <input type="submit" value="Update" class="btn btn-primary"
+                   style="width:auto" />
+            <a asp-action="Index" asp-area="Admin" asp-controller="Role" class="btn btn-primary" style="width:auto">Cancel</a>
+        </div>
+    </div>
+</form>
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

@@ -54,26 +54,129 @@
                         <form asp-action="Buy" asp-controller="Cart" asp-route-id="@Model.MaSp" method="post">
                             <input class="input-number" type="number" name="soLuong" value="1" min="1" max="@Model.SoLuong" />
                             <input type="hidden" name="id" value="@Model.MaSp" />
-                            <input type="submit" value="THÊM VÀO GIỎ HÀNG" class="btn_3"/>
+                            <input type="submit" value="THÊM VÀO GIỎ HÀNG" class="btn_3" />
                         </form>
                         @*<div class="product_count d-inline-block">
-                            <span class="inumber-decrement"> <i class="ti-minus"></i></span>
-                            <input class="input-number" type="text" value="1" min="0" max="10">
-                            <span class="number-increment"> <i class="ti-plus"></i></span>
-                        </div>
-                        <div class="add_to_cart">
-                            <a asp-action="Buy" asp-controller="Cart" asp-route-id="@Model.MaSp" class="btn_3">add to cart</a>
-                            <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
-                        </div>*@
+                                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                                <input class="input-number" type="text" value="1" min="0" max="10">
+                                <span class="number-increment"> <i class="ti-plus"></i></span>
+                            </div>
+                            <div class="add_to_cart">
+                                <a asp-action="Buy" asp-controller="Cart" asp-route-id="@Model.MaSp" class="btn_3">add to cart</a>
+                                <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+                            </div>*@
                         <div class="social_icon">
                             <a href="#" class="fb"><i class="ti-facebook"></i></a>
                             <a href="#" class="tw"><i class="ti-twitter-alt"></i></a>
                             <a href="#" class="li"><i class="ti-linkedin"></i></a>
                         </div>
                     </div>
+                    @*Comment-Area*@
+                    <div class="col-lg-6">
+                        <div class="review_list">
+                            @foreach (var a in ViewBag.dsdanhgia)
+                            {
+                                <div class="review_item">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-muted"> @a.Ngay.ToString("dd/MM/yyyy hh:mm") </p>
+                                            @for (int i = 0; i < @a.Rating; i++)
+                                            {
+                                                <i class="ratingStar fas fa-star" style="color:#fd9727"></i>;
+                                            }
+                                            @for (int i = @a.Rating; i < 5; i++)
+                                            {
+                                                <i class="ratingStar fas fa-star" style="color:#dedddd"></i>;
+                                            }
+                                        </div>
+                                    </div>
+                                    <p style="font-size:17px; color:black; font-weight:bold">@a.User.HoTen</p>
+                                    <p style="font-size:15px;">@a.Text</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="review_box">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <h4 style="font-weight: bold">Thêm bình luận của bạn</h4>
+                            @using (Html.BeginForm("CreateCmt", "Home", FormMethod.Post, new { onsubmit = "return VerifyRating()" }))
+                            {
+                                <input type="hidden" value="@Model.MaSp" name="maSp" />
+                                <div class="form-group">
+                                    <div onmouseout="CrateSelected()">
+                                        <p>Đánh giá:</p>
+                                        <span class="text-warning">
+                                            <i id="span1" onmouseout="CrateOut(1)" onmouseover="CrateOver(1)" onclick="CrateClick(1)" class="ratingStar far fa-star"></i>
+                                            <i id="span2" onmouseout="CrateOut(2)" onmouseover="CrateOver(2)" onclick="CrateClick(2)" class="ratingStar far fa-star"></i>
+                                            <i id="span3" onmouseout="CrateOut(3)" onmouseover="CrateOver(3)" onclick="CrateClick(3)" class="ratingStar far fa-star"></i>
+                                            <i id="span4" onmouseout="CrateOut(4)" onmouseover="CrateOver(4)" onclick="CrateClick(4)" class="ratingStar far fa-star"></i>
+                                            <i id="span5" onmouseout="CrateOut(5)" onmouseover="CrateOver(5)" onclick="CrateClick(5)" class="ratingStar far fa-star"></i>
+                                        </span>
+                                    </div>
+                                    <br />
+                                    <textarea rows="8" name="comment" class="form-control" placeholder="Viết bình luận ở đây." required></textarea>
+                                </div>
+                                <input type="submit" class="btn btn-success" value="BÌNH LUẬN" style="border: 1px solid #0A98C0;
+                                                                                                                    border-radius: 0;
+                                                                                                                    background-color: white;
+                                                                                                                    font-weight: bold;
+                                                                                                                    color: #0A98C0;
+                                                                                                                    padding: 13px 19px" />
+                                <div>
+                                    <input type="hidden" name="rating" id="lblRating" value="0" />
+                                </div>
+                            }
+
+
+                        }
+                        else
+                        {
+                            <h4 style="font-weight: bold">Bạn chưa đăng nhập! Hãy đăng nhập để bình luận.</h4>
+                            <a asp-action="login" asp-controller="account" class="btn btn-primary" style="color: white; border: 1px solid #0A98C0; background-color: #0A98C0; font-weight: bold;">ĐĂNG NHẬP</a>
+                        }
+                    </div>
                 </div>
             </div>
+            @*End-comment*@
         </div>
     </div>
 </div>
+
 <!--================End Single Product Area =================-->
+<script type="text/javascript">
+    function CrateOut(rating) {
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'far fa-star');
+        }
+    }
+    function CrateOver(rating) {
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'fas fa-star');
+        }
+    }
+    function CrateClick(rating) {
+        $("#lblRating").val(rating);
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'fas fa-star');
+        }
+        for (var i = rating + 1; i <= 5; i++) {
+            $("#span" + i).attr('class', 'far fa-star');
+        }
+    }
+    function CrateSelected() {
+        var rating = $("#lblRating").val();
+        for (var i = 1; i <= rating; i++) {
+            $("#span" + i).attr('class', 'fas fa-star');
+        }
+    }
+    function VerifyRating() {
+        var rating = $("#lblRating").val();
+        if (rating == "0") {
+            alert("chưa đánh giá chất lượng sản phẩm.");
+            return false;
+        }
+    }
+</script>

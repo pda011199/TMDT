@@ -7,10 +7,13 @@ using DoAn.Models.Domain;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DoAn.Controllers
 {
     [Area("Admin")]
+    [Authorize("ADMINISTRATOR")]
+    [Authorize("EMPLOYEE")]
     public class CategoryController : Controller
     {
         DataContext data;
@@ -56,6 +59,13 @@ namespace DoAn.Controllers
         {
             LoaiSp lsp = data.LoaiSp.Find(id);
             lsp.Deleted = true;
+            var dssp = data.SanPham.Where(p => p.MaLoaiSp == id).ToList();
+            foreach(SanPham item in dssp)
+            {
+                item.Deleted = true;
+                data.Entry(item).State = EntityState.Modified;
+                data.SaveChanges();
+            }
             data.Entry(lsp).State = EntityState.Modified;
             data.SaveChanges();
             return RedirectToAction("Index", "Category");

@@ -1,4 +1,5 @@
 ﻿
+
 @{ ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
@@ -23,20 +24,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (Model != null)
                 {
-    <tr>
-        <th>@item.MaSp</th>
-        <th><img src="~/images/@item.HinhAnh" style="width:150px;height:100px" /></th>
-        <th>@item.TenSp</th>
-        <th>@item.Gia</th>
-        <th>@item.LoaiSp.TenLoaiSp</th>
-        <th>@item.SoLuong</th>
-        <th style="text-align:center">
-            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.MaSp" class="btn btn-outline-danger">Xoá</a>
-            <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.MaSp" class="btn btn-outline-warning">Sửa</a>
-        </th>
-    </tr>}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>@item.MaSp</th>
+                            <th><img src="~/images/@item.HinhAnh" style="width:150px;height:100px" /></th>
+                            <th>@item.TenSp</th>
+                            <th>@item.Gia</th>
+                            <th>@item.LoaiSp.TenLoaiSp</th>
+                            <th>@item.SoLuong</th>
+                            <th style="text-align:center">
+                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.MaSp" class="btn btn-outline-danger">Xoá</a>
+                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.MaSp" class="btn btn-outline-warning">Sửa</a>
+                            </th>
+                        </tr>
+                    }
+                }
 
             </tbody>
         </table>

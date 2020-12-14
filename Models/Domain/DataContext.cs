@@ -19,7 +19,8 @@ namespace DoAn.Models.Domain
         public DbSet<LoaiSp> LoaiSp { get; set; }
         public DbSet<HoaDon> HoaDon { get; set; }
         public DbSet<CT_HoaDon> CTHoaDon { get; set; }
-
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<SanPhamYeuThich> SanPhamYeuThich { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -33,8 +34,14 @@ namespace DoAn.Models.Domain
                 {
                     Name = "Customer",
                     NormalizedName = "CUSTOMER"
+                },
+                new IdentityRole
+                {
+                    Name = "Employee",
+                    NormalizedName = "EMPLOYEE"
                 }
                 );
+            
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿
 @{ ViewData["Title"] = "Index";
-                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tình trạng đơn hàng</h1>
@@ -17,6 +17,8 @@
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Tổng tiền</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Tình trạng</th>
                     <th>Trạng thái</th>
                     <th></th>
                     <th></th>
@@ -25,29 +27,45 @@
             <tbody>
                 @foreach (var item in ViewBag.hoaDon)
                 {
-    <tr>
-        <td>@item.MaHD</td>
-        <td>@item.HoTen</td>
-        <td>@item.Email</td>
-        <td>@item.SDT</td>
-        <td>@item.DiaChi</td>
-        <td>@item.TongTien</td>
-        @if (item.TrangThai == null)
-        {
-<td>Đang chờ</td>
-                    <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
-                                        <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
-}
-        @if (item.TrangThai == false)
-        {
-<td>Đã hủy</td>
-}
-        @if (item.TrangThai == true)
-        {
-<td>Thành công</td>
-}
-    </tr>
-}
+                    <tr>
+                        <td>@item.MaHD</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.Email</td>
+                        <td>@item.SDT</td>
+                        <td>@item.DiaChi</td>
+                        <td>@item.TongTien</td>
+                        @if (item.LoaiTT == 1)
+                        {
+                            <td>Paypal</td>
+                        }
+                        else
+                        {
+                            <td>Khi nhận hàng</td>
+                        }
+                        @if (item.TrangThai == true)
+                        {
+                            <td>Đã thanh toán</td>
+                        }
+                        else
+                        {
+                            <td>Chưa thanh toán</td>
+                        }
+                        @if (item.TrangThai == null)
+                        {
+                            <td>Đang chờ</td>
+                            <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
+                            <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
+                        }
+                        @if (item.TrangThai == false)
+                        {
+                            <td>Đã hủy</td>
+                        }
+                        @if (item.TrangThai == true)
+                        {
+                            <td>Thành công</td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

@@ -181,6 +181,8 @@ namespace DoAn.Migrations
                     TongTien = table.Column<double>(type: "float", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SDT = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LoaiTT = table.Column<int>(type: "int", nullable: false),
+                    TinhTrang = table.Column<bool>(type: "bit", nullable: false),
                     TrangThai = table.Column<bool>(type: "bit", nullable: true),
                     Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -223,6 +225,36 @@ namespace DoAn.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SanPhamMaSp = table.Column<int>(type: "int", nullable: true),
+                    MaSp = table.Column<int>(type: "int", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ngay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_SanPham_SanPhamMaSp",
+                        column: x => x.SanPhamMaSp,
+                        principalTable: "SanPham",
+                        principalColumn: "MaSp",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CTHoaDon",
                 columns: table => new
                 {
@@ -251,15 +283,41 @@ namespace DoAn.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cc09a7c0-d242-4635-92db-63884b5626a2", "d7ddd604-5415-4209-942a-bdfd4984792b", "Administrator", "ADMINISTRATOR" });
+            migrationBuilder.CreateTable(
+                name: "SanPhamYeuThich",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MaSp = table.Column<int>(type: "int", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SanPhamMaSp = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SanPhamYeuThich", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_SanPhamYeuThich_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SanPhamYeuThich_SanPham_SanPhamMaSp",
+                        column: x => x.SanPhamMaSp,
+                        principalTable: "SanPham",
+                        principalColumn: "MaSp",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f1726c30-18cc-47dc-a28c-db5598314e0a", "1f2b5f8f-24ab-4768-9fa5-8485c8c196df", "Customer", "CUSTOMER" });
+                values: new object[] { "ae29d194-c7f4-4111-9d0a-2d7a88eb40e6", "72d1302f-05f8-496c-8bae-ea03f3bbcbdc", "Administrator", "ADMINISTRATOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "1c3130ea-f023-4217-a0b5-93056d61b1e6", "b7361ac1-f32d-4cb3-9b97-fc1afe81b381", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -301,6 +359,16 @@ namespace DoAn.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comment_SanPhamMaSp",
+                table: "Comment",
+                column: "SanPhamMaSp");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_UserId",
+                table: "Comment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CTHoaDon_HoaDonMaHD",
                 table: "CTHoaDon",
                 column: "HoaDonMaHD");
@@ -319,6 +387,16 @@ namespace DoAn.Migrations
                 name: "IX_SanPham_LoaiSpMaLoaiSp",
                 table: "SanPham",
                 column: "LoaiSpMaLoaiSp");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SanPhamYeuThich_SanPhamMaSp",
+                table: "SanPhamYeuThich",
+                column: "SanPhamMaSp");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SanPhamYeuThich_UserId1",
+                table: "SanPhamYeuThich",
+                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -339,7 +417,13 @@ namespace DoAn.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
                 name: "CTHoaDon");
+
+            migrationBuilder.DropTable(
+                name: "SanPhamYeuThich");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

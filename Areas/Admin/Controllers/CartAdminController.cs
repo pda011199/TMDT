@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DoAn.Models.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize("ADMINISTRATOR")]
+    [Authorize("EMPLOYEE")]
     public class CartAdminController : Controller
     {
         private readonly DataContext data;

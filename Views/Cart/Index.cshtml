@@ -128,6 +128,9 @@
                     <a class="btn_1" asp-action="Index" asp-controller="Home">Continue Shopping</a>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <a asp-action="PaypalCheckout" asp-controller="Cart">
+                            <img src="~/images/paypal_checkout.gif" height="100" />
+                        </a>
                         <a class="btn_1 checkout_btn_1" asp-action="CheckOutWithSignIn" asp-controller="Cart">Proceed to checkout</a>
                     }
                     else
@@ -137,6 +140,6 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 </section>
 <!--================End Cart Area =================-->
