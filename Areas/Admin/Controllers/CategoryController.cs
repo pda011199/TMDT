@@ -12,8 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 namespace DoAn.Controllers
 {
     [Area("Admin")]
-    [Authorize("ADMINISTRATOR")]
-    [Authorize("EMPLOYEE")]
+    //[Authorize(Roles ="Administrator")]
+    //[Authorize(Roles = "Employee")]
+
     public class CategoryController : Controller
     {
         DataContext data;

@@ -84,7 +84,7 @@
                 <div class="single_feature_post_text">
                     <img src="~/images/feature1.png" alt="#" height="400" width="400">
                     <div class="hover_text">
-                        <a href="single-product.html" class="btn_2">Manga</a>
+                        <a asp-action="CateSearch" asp-route-id="1" asp-controller="CustomerCate" class="btn_2">Manga</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 <div class="single_feature_post_text">
                     <img src="~/images/feature2.jpg" alt="#" height="400" width="400">
                     <div class="hover_text">
-                        <a href="single-product.html" class="btn_2">Comic</a>
+                        <a asp-action="CateSearch" asp-route-id="2" asp-controller="CustomerCate" class="btn_2">Comic</a>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                 <div class="single_feature_post_text">
                     <img src="~/images/feature3.jpg" alt="#" height="400" width="400">
                     <div class="hover_text">
-                        <a href="single-product.html" class="btn_2">Other</a>
+                        <a asp-action="CateSearchOther"  asp-controller="CustomerCate" class="btn_2">Other</a>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_category_product">
                         <div class="single_category_img">
-                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.MaSp" asp-route-name="@item.TenSp"><img src="~/images/@item.HinhAnh" alt=""></a>
+                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.MaSp" asp-route-name="@item.TenSp"><img src="~/images/@item.HinhAnh" width="250" height="300" alt="ProductImg"></a>
                             <div class="category_social_icon">
                                 <ul>
                                     <li>
@@ -140,7 +140,17 @@
                             </div>
                             <div class="category_product_text">
                                 <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.MaSp" asp-route-name="@item.TenSp"><h5>@item.TenSp</h5></a>
-                                <p>@item.Gia VNĐ</p>
+                                <p>@if (item.GiamGia != 0)
+                                { 
+                                    <span>@(item.Gia - item.GiamGia) VNĐ</span>
+                                    <span style="font-size:60%; text-decoration:line-through">@item.Gia VNĐ</span>
+                                }
+                                else
+                                {
+                                    <span>@item.Gia VNĐ</span>
+                                }
+                                </p>
+                                
                             </div>
                         </div>
                     </div>
@@ -148,48 +158,11 @@
             }
 
 
-            <div class="col-lg-12 text-center">
-                <a href="#" class="btn_2">More Items</a>
-            </div>
+            
         </div>
     </div>
 
 </section>
 <!--================End Category Product Area =================-->
-<!-- new arrival part end -->
-<!-- free shipping here -->
-<section class="shipping_details section_padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="single_shopping_details">
-                    <img src="~/images/icon/icon_1.png" alt="">
-                    <h4>Free shipping</h4>
-                    <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single_shopping_details">
-                    <img src="~/images/icon/icon_2.png" alt="">
-                    <h4>Free shipping</h4>
-                    <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single_shopping_details">
-                    <img src="~/images/icon/icon_3.png" alt="">
-                    <h4>Free shipping</h4>
-                    <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single_shopping_details">
-                    <img src="~/images/icon/icon_4.png" alt="">
-                    <h4>Free shipping</h4>
-                    <p>Divided face for bearing the divide unto seed winged divided light Forth.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- free shipping end -->
+
+

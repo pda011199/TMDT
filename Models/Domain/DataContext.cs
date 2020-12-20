@@ -21,6 +21,7 @@ namespace DoAn.Models.Domain
         public DbSet<CT_HoaDon> CTHoaDon { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<SanPhamYeuThich> SanPhamYeuThich { get; set; }
+        public DbSet<MaKhuyenMai> MaKhuyenMai { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

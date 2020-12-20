@@ -10,6 +10,7 @@ namespace DoAn.Models.Domain
     {
         public string HoTen { get; set; }
         public string DiaChi { get; set; }
+        public int DiemTichLuy { get; set; }
     }
 
 }

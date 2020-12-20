@@ -66,11 +66,11 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Giới thiệu</a>
+                                    <a class="nav-link" asp-controller="Home" asp-action="About">Giới thiệu</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Liên hệ</a>
+                                    <a class="nav-link" asp-controller="Home" asp-action="Contact">Liên hệ</a>
                                 </li>
                                 <partial name="_LoginPartial" />
 
@@ -108,10 +108,9 @@
                     <div class="single_footer_part">
                         <h4>Category</h4>
                         <ul class="list-unstyled">
-                            <li><a href="#">Male</a></li>
-                            <li><a href="#">Female</a></li>
-                            <li><a href="#">Shoes</a></li>
-                            <li><a href="#">Fashion</a></li>
+                            <li><a asp-controller="CustomerCate" asp-action="Index" asp-route-id="1">Manga</a></li>
+                            <li><a asp-controller="CustomerCate" asp-action="Index" asp-route-id="2">Comic</a></li>
+                            <li><a asp-controller="CustomerCate" asp-action="Index" asp-route-id="3">Other</a></li>
                         </ul>
                     </div>
                 </div>
@@ -119,10 +118,9 @@
                     <div class="single_footer_part">
                         <h4>Company</h4>
                         <ul class="list-unstyled">
-                            <li><a href="">About</a></li>
-                            <li><a href="">News</a></li>
-                            <li><a href="">FAQ</a></li>
-                            <li><a href="">Contact</a></li>
+                            <li><a asp-controller="Home" asp-action="About">Giới thiệu</a></li>
+                            <li><a href="">Phương thức thanh toán</a></li>
+                            <li><a asp-controller="Home" asp-action="Contact">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -130,9 +128,9 @@
                     <div class="single_footer_part">
                         <h4>Address</h4>
                         <ul class="list-unstyled">
-                            <li><a href="#">200, Green block, NewYork</a></li>
-                            <li><a href="#">+10 456 267 1678</a></li>
-                            <li><span>contact89@winter.com</span></li>
+                            <li><a href="#">828 Sư Vạn Hạnh, P13, Q10, TP.HCM</a></li>
+                            <li><a href="#">+84 632 052</a></li>
+                            <li><span>contact89@comiccorner.com</span></li>
                         </ul>
                     </div>
                 </div>
@@ -167,7 +165,7 @@
                         <P>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </P>
                     </div>
@@ -195,7 +193,7 @@
     <script src="~/js/slick.min.js"></script>
     <script src="~/js/jquery.counterup.min.js"></script>
     <script src="~/js/waypoints.min.js"></script>
-    <script src="~/js/contact.js"></script>
+    @*<script src="~/js/contact.js"></script>*@
     <script src="~/js/jquery.ajaxchimp.min.js"></script>
     <script src="~/js/jquery.form.js"></script>
     <script src="~/js/jquery.validate.min.js"></script>
@@ -207,6 +205,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/homeController.js"></script>
+    <script src="~/js/cartController.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 

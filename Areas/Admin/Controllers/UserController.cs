@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using DoAn.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize("ADMINISTRATOR")]
-    [Authorize("EMPLOYEE")]
+    //[Authorize(Roles ="Administrator")]
+    //[Authorize(Roles = "Employee")]
+
     public class UserController : Controller
     {
         DataContext data;
@@ -23,5 +25,6 @@ namespace DoAn.Areas.Admin.Controllers
             var user = data.Users.ToList();
             return View(user);
         }
+       
     }
 }

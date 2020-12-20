@@ -18,6 +18,8 @@ namespace DoAn.Models.Domain
         public double Gia { get; set; }
         public int SoLuong { get; set; }
         public DateTime NgayTao { get; set; }
+        public int GiamGia { get; set; }
+        public bool SpHot { get; set; }
         public bool Deleted { get; set; }
     }
 }

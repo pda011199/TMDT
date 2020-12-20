@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh sách mã giảm giá</h1>
+</div>
+<a asp-controller="Coupon" asp-action="Create" class="btn btn-primary">Thêm Mã Giảm Giá</a>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
+            <thead>
+                <tr style="text-align:center">
+                    <th>Mã Giảm Giá</th>
+                    <th>Ngày Bắt Đầu</th>
+                    <th>Ngày Kết Thúc</th>
+                    <th>Giá trị</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>@item.Id</th>
+                            <th>@item.NgayBatDau</th>
+                            <th>@item.NgayKetThuc</th>
+                            <th>@item.GiaTri %</th>
+                            <th style="text-align:center">
+                                <a asp-controller="Coupon" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Sửa</a>
+                            </th>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

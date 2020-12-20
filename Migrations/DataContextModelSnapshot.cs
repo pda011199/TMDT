@@ -91,26 +91,38 @@ namespace DoAn.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("DiaChi")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte>("GiaoHang")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("HoTen")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoaiTT")
-                        .HasColumnType("int");
+                    b.Property<string>("KhuyenMaiId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte>("LoaiTT")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("MaKhuyenMai")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Ngay")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("NgayThuTien")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SDT")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TamTinh")
+                        .HasColumnType("float");
 
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
@@ -124,7 +136,12 @@ namespace DoAn.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<double>("VAT")
+                        .HasColumnType("float");
+
                     b.HasKey("MaHD");
+
+                    b.HasIndex("KhuyenMaiId");
 
                     b.HasIndex("UserId");
 
@@ -149,6 +166,25 @@ namespace DoAn.Migrations
                     b.ToTable("LoaiSp");
                 });
 
+            modelBuilder.Entity("DoAn.Models.Domain.MaKhuyenMai", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("GiaTri")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayBatDau")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayKetThuc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MaKhuyenMai");
+                });
+
             modelBuilder.Entity("DoAn.Models.Domain.SanPham", b =>
                 {
                     b.Property<int>("MaSp")
@@ -161,6 +197,9 @@ namespace DoAn.Migrations
 
                     b.Property<double>("Gia")
                         .HasColumnType("float");
+
+                    b.Property<int>("GiamGia")
+                        .HasColumnType("int");
 
                     b.Property<string>("HinhAnh")
                         .HasColumnType("nvarchar(max)");
@@ -179,6 +218,9 @@ namespace DoAn.Migrations
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
+
+                    b.Property<bool>("SpHot")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TenSp")
                         .HasColumnType("nvarchar(max)");
@@ -227,6 +269,9 @@ namespace DoAn.Migrations
 
                     b.Property<string>("DiaChi")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiemTichLuy")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -313,17 +358,24 @@ namespace DoAn.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ae29d194-c7f4-4111-9d0a-2d7a88eb40e6",
-                            ConcurrencyStamp = "72d1302f-05f8-496c-8bae-ea03f3bbcbdc",
+                            Id = "21c8d41e-a9c5-49e0-9242-e43397f6dfbc",
+                            ConcurrencyStamp = "62d736f8-09ca-4df8-8d89-7c4c2a1bfd0f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "1c3130ea-f023-4217-a0b5-93056d61b1e6",
-                            ConcurrencyStamp = "b7361ac1-f32d-4cb3-9b97-fc1afe81b381",
+                            Id = "7750d4c5-0c66-4073-98fa-d1b34bfd59d9",
+                            ConcurrencyStamp = "acd133bb-e1a1-4779-9d08-b8c8513750bd",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "12b1552f-a7be-4014-b6fc-dac871b2b3b3",
+                            ConcurrencyStamp = "060eab60-d5fd-4fc2-a56d-c30bdc25aff2",
+                            Name = "Employee",
+                            NormalizedName = "EMPLOYEE"
                         });
                 });
 
@@ -463,9 +515,15 @@ namespace DoAn.Migrations
 
             modelBuilder.Entity("DoAn.Models.Domain.HoaDon", b =>
                 {
+                    b.HasOne("DoAn.Models.Domain.MaKhuyenMai", "KhuyenMai")
+                        .WithMany()
+                        .HasForeignKey("KhuyenMaiId");
+
                     b.HasOne("DoAn.Models.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("KhuyenMai");
 
                     b.Navigation("User");
                 });

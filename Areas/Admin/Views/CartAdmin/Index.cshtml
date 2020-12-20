@@ -5,7 +5,13 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tình trạng đơn hàng</h1>
 </div>
-
+<div class="tab">
+    <button class="tablinks" data-table="#waitHoaDon">Đơn đang đợi</button>
+    <button class="tablinks" data-table="#unpaidHoaDon">Đơn chưa thanh toán</button>
+    <button class="tablinks" data-table="#yetDeliveryHoaDon">Đơn chưa giao hàng</button>
+    <button class="tablinks" data-table="#deliveringHoaDon">Đơn đang giao hàng</button>
+    <button class="tablinks" data-table="#deliveriedHoaDon">Đơn đã giao hàng</button>
+</div>
 <div class="card-body">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
@@ -13,28 +19,28 @@
                 <tr>
                     <th>Mã hóa đơn</th>
                     <th>Họ và tên</th>
-                    <th>Email</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Tổng tiền</th>
-                    <th>Phương thức thanh toán</th>
-                    <th>Tình trạng</th>
+                    <th>Loại thanh toán</th>
+                    <th>Thanh Toán</th>
                     <th>Trạng thái</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var item in ViewBag.hoaDon)
+            <tbody id="waitHoaDon">
+                @*Danh sách hóa đơn đang đợi*@
+                @foreach (var item in ViewBag.waitHoaDon)
                 {
                     <tr>
                         <td>@item.MaHD</td>
                         <td>@item.HoTen</td>
-                        <td>@item.Email</td>
                         <td>@item.SDT</td>
                         <td>@item.DiaChi</td>
                         <td>@item.TongTien</td>
-                        @if (item.LoaiTT == 1)
+                        
+                        @if (item.LoaiTT == 2)
                         {
                             <td>Paypal</td>
                         }
@@ -42,7 +48,179 @@
                         {
                             <td>Khi nhận hàng</td>
                         }
+                        @if (item.TinhTrang == true)
+                        {
+                            <td>Đã thanh toán</td>
+                        }
+                        else
+                        {
+                            <td>Chưa thanh toán</td>
+                        }
+                        @if (item.TrangThai == null)
+                        {
+                            <td>Đang chờ</td>
+                            <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
+                            <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
+                        }
+                        @if (item.TrangThai == false)
+                        {
+                            <td>Đã hủy</td>
+                        }
                         @if (item.TrangThai == true)
+                        {
+                            <td>Thành công</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tbody id="unpaidHoaDon">
+                @*Danh sách hóa đơn chưa thanh toán*@
+                @foreach (var item in ViewBag.unpaidHoaDon)
+                {
+                    <tr>
+                        <td>@item.MaHD</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.SDT</td>
+                        <td>@item.DiaChi</td>
+                        <td>@item.TongTien</td>
+                        @if (item.LoaiTT == 2)
+                        {
+                            <td>Paypal</td>
+                        }
+                        else
+                        {
+                            <td>Khi nhận hàng</td>
+                        }
+                        @if (item.TinhTrang == true)
+                        {
+                            <td>Đã thanh toán</td>
+                        }
+                        else
+                        {
+                            <td>Chưa thanh toán</td>
+                        }
+                        @if (item.TrangThai == null)
+                        {
+                            <td>Đang chờ</td>
+                            <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
+                            <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
+                        }
+                        @if (item.TrangThai == false)
+                        {
+                            <td>Đã hủy</td>
+                        }
+                        @if (item.TrangThai == true)
+                        {
+                            <td>Thành công</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tbody id="yetDeliveryHoaDon">
+                @*Danh sách hóa đơn chưa giao hàng*@
+                @foreach (var item in ViewBag.yetDeliveryHoaDon)
+                {
+                    <tr>
+                        <td>@item.MaHD</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.SDT</td>
+                        <td>@item.DiaChi</td>
+                        <td>@item.TongTien</td>
+                        @if (item.LoaiTT == 2)
+                        {
+                            <td>Paypal</td>
+                        }
+                        else
+                        {
+                            <td>Khi nhận hàng</td>
+                        }
+                        @if (item.TinhTrang == true)
+                        {
+                            <td>Đã thanh toán</td>
+                        }
+                        else
+                        {
+                            <td>Chưa thanh toán</td>
+                        }
+                        @if (item.TrangThai == null)
+                        {
+                            <td>Đang chờ</td>
+                            <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
+                            <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
+                        }
+                        @if (item.TrangThai == false)
+                        {
+                            <td>Đã hủy</td>
+                        }
+                        @if (item.TrangThai == true)
+                        {
+                            <td>Thành công</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tbody id="deliveringHoaDon">
+                @*Danh sách hóa đơn đang giao hàng*@
+                @foreach (var item in ViewBag.deliveringHoaDon)
+                {
+                    <tr>
+                        <td>@item.MaHD</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.SDT</td>
+                        <td>@item.DiaChi</td>
+                        <td>@item.TongTien</td>
+                        @if (item.LoaiTT == 2)
+                        {
+                            <td>Paypal</td>
+                        }
+                        else
+                        {
+                            <td>Khi nhận hàng</td>
+                        }
+                        @if (item.TinhTrang == true)
+                        {
+                            <td>Đã thanh toán</td>
+                        }
+                        else
+                        {
+                            <td>Chưa thanh toán</td>
+                        }
+                        @if (item.TrangThai == null)
+                        {
+                            <td>Đang chờ</td>
+                            <td><a asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Xác nhận</a></td>
+                            <td><a asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD">Từ chối</a></td>
+                        }
+                        @if (item.TrangThai == false)
+                        {
+                            <td>Đã hủy</td>
+                        }
+                        @if (item.TrangThai == true)
+                        {
+                            <td>Thành công</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tbody id="deliveriedHoaDon">
+                @*Danh sách hóa đơn đã giao*@
+                @foreach (var item in ViewBag.deliveriedHoaDon)
+                {
+                    <tr>
+                        <td>@item.MaHD</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.SDT</td>
+                        <td>@item.DiaChi</td>
+                        <td>@item.TongTien</td>
+                        @if (item.LoaiTT == 2)
+                        {
+                            <td>Paypal</td>
+                        }
+                        else
+                        {
+                            <td>Khi nhận hàng</td>
+                        }
+                        @if (item.TinhTrang == true)
                         {
                             <td>Đã thanh toán</td>
                         }
@@ -70,3 +248,16 @@
         </table>
     </div>
 </div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('tbody').hide().first().show();
+            $('.tablinks').on('click', function () {
+                const that = $(this);
+                const idTab = that.attr('data-table');
+                $('tbody').hide();
+                $(idTab).show();
+            })
+        })
+    </script>
+ }

@@ -13,8 +13,9 @@ using Microsoft.EntityFrameworkCore;
 namespace DoAn.Controllers
 {
     [Area("Admin")]
-    [Authorize("ADMINISTRATOR")]
-    [Authorize("EMPLOYEE")]
+    //[Authorize(Roles ="Administrator")]
+    //[Authorize(Roles = "Employee")]
+
     public class ProductController : Controller
     {
         DataContext data;
@@ -63,6 +64,7 @@ namespace DoAn.Controllers
                 newProduct.NgayTao = DateTime.Now;
                 newProduct.Deleted = false;
                 newProduct.LoaiSp = data.LoaiSp.Find(productModel.MaLoaiSp);
+                newProduct.GiamGia = 0;
                 data.SanPham.Add(newProduct);
                 data.SaveChanges();
                 return RedirectToAction("Index", "Product");
@@ -101,12 +103,12 @@ namespace DoAn.Controllers
                 sp.TenSp = sanPham.TenSp;
                 sp.Mota = sanPham.Mota;
                 sp.Gia = sanPham.Gia;
-
+                sp.SpHot = sanPham.SpHot;
+                sp.GiamGia = sanPham.GiamGia;
                 ViewBag.Status = 1;
             }
             data.SaveChanges();
             return View(sanPham);
         }
-        
     }
 }

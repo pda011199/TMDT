@@ -46,7 +46,7 @@
             <div class="check_title">
                 <h2>
                     Bạn đã có tài khoản?
-                    <a href="#">Nhấn để đăng nhập</a>
+                    <a asp-controller="Account" asp-action="login">Nhấn để đăng nhập</a>
                 </h2>
             </div>
 
@@ -72,6 +72,17 @@
                         <div class="col-md-12 form-group ">
                             <input type="text" class="form-control" name="diaChi" placeholder="Địa chỉ" />
                         </div>
+
+                        <div class="col-md-6 form-group ">
+                            <input type="text" class="form-control" id="maKhuyenMai" placeholder="Mã Khuyễn Mãi" />
+                            <input type="text" name="maKhuyenMai" id="nMaKhuyenMai" hidden />
+                            <p id="couponNotification"></p>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <a href="#" class="btn btn-light" id="btn-maKhuyenMai">Áp dụng mã</a>
+                            <a href="#" class="btn btn-danger" id="btn-huyMaKhuyenMai" style="display:none">Hủy</a>
+                        </div>
+
                         <button type="submit" class="btn_3">ĐẶT MUA</button>
                     </form>
                 </div>
@@ -87,33 +98,62 @@
                             </li>
                             @foreach (var item in ViewBag.cart)
                             {
-                <li>
-                    <a href="#">
-                        @item.SanPham.TenSp
-                        <span class="middle">x @item.SoLuong</span>
-                        <span class="last">@item.SanPham.Gia đ</span>
-                    </a>
-                </li>
-}
+                                <li>
+                                    <a href="#">
+                                        @item.SanPham.TenSp
+                                        <span class="middle">x @item.SoLuong</span>
+                                        <span class="last">@item.SanPham.Gia đ</span>
+                                    </a>
+                                    @if(item.SanPham.GiamGia != 0)
+                                    {
+                                        <a href="#" class="product-sale"> @*Chinh css cho class nay*@
+                                            Giảm giá
+                                            <span class="last">@item.SanPham.GiamGia đ</span>
+                                        </a>
+                                    }
+                                </li>
+
+                            }
                         </ul>
                         @foreach (var item in ViewBag.cart)
                         {
-            <ul class="list list_2">
-                <li>
-                    <a href="#">
-                        Thành tiền
-                        <span>@(item.SanPham.Gia * item.SoLuong) đ</span>
-                    </a>
-                </li>
+                            <ul class="list list_2">
+                                <li>
+                                    <a href="#">
+                                        Tạm tính
+                                        <span>@((item.SanPham.Gia - item.SanPham.GiamGia)* item.SoLuong) đ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                        <ul class="list list_2">
+                            <li>
+                                <a href="#">
+                                    VAT
+                                    <span>@ViewBag.vat đ</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="list list_2" id="detailCoupon" style="display:none">
+                            <li>
+                                <a href="#">
+                                    Mã giảm giá
+                                    <span><label id="coupon">0</label> đ</span>
+                                    <input type="number" id="oldCoupon" value="0" hidden />
+                                </a>
+                            </li>
+                        </ul>
 
-                <li>
-                    <a href="#">
-                        Tổng đơn
-                        <span>@ViewBag.total đ</span>
-                    </a>
-                </li>
-            </ul>}
-
+                        <ul class="list list_2">
+                            <li>
+                                <a href="#">
+                                    Tổng đơn
+                                    @*<span>@ViewBag.total đ</span>*@
+                                    <span><label id="total">@ViewBag.total</label> đ</span>
+                                    <input type="number" id="oldTotal" value=@ViewBag.total hidden />
+                                </a>
+                            </li>
+                        </ul>
                         <h2>Your Order</h2>
                         <div class="payment_item">
                             <div class="radion_btn">

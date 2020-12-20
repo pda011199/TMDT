@@ -660,7 +660,6 @@ D:\Bài tập\Thương mại điện tử\TMDT\bin\Debug\netcoreapp3.1\runtimes\
 D:\Bài tập\Thương mại điện tử\TMDT\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 D:\Bài tập\Thương mại điện tử\TMDT\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Bài tập\Thương mại điện tử\TMDT\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.csprojAssemblyReference.cache
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.AssemblyInfoInputs.cache
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.AssemblyInfo.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.RazorAssemblyInfo.cache
@@ -920,3 +919,10 @@ D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.cspr
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.MvcApplicationPartsAssemblyInfo.cache
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Cart\CheckoutFail.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Cart\CheckoutSuccess.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Home\Contact.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coupon\Index.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coupon\Create.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coupon\Edit.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Cart\CheckBill.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.csprojAssemblyReference.cache

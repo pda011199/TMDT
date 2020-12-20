@@ -98,5 +98,14 @@ namespace DoAn.Controllers
                 status = "Sản phẩm đã được thêm vào danh sách sản phẩm yêu thích."
             });
         }
+        
+        public IActionResult About()
+        {
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
     }
 }

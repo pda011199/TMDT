@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize("ADMINISTRATOR")]
-    [Authorize("EMPLOYEE")]
+    //[Authorize(Roles ="Administrator")]
+    //[Authorize(Roles = "Employee")]
     public class CartAdminController : Controller
     {
         private readonly DataContext data;
@@ -23,7 +23,12 @@ namespace DoAn.Areas.Admin.Controllers
         public IActionResult Index()
         {
             ViewBag.hoaDon = data.HoaDon.OrderByDescending(p=> p.MaHD).ToList();
-            ViewBag.waitHodDon = data.HoaDon.Where(p => p.TrangThai == null).ToList();
+            ViewBag.waitHoaDon = data.HoaDon.Where(p => p.TrangThai == null).ToList();
+            ViewBag.otherHoaDon = data.HoaDon.Where(p => p.TrangThai != null).ToList();
+            ViewBag.unpaidHoaDon = data.HoaDon.Where(p => p.TinhTrang == false && p.TrangThai == true).ToList();
+            ViewBag.yetDeliveryHoaDon = data.HoaDon.Where(p => p.GiaoHang == 1 && p.TrangThai == true).ToList();
+            ViewBag.deliveringHoaDon = data.HoaDon.Where(p => p.GiaoHang == 2 && p.TrangThai == true).ToList();
+            ViewBag.deliveriedHoaDon = data.HoaDon.Where(p => p.GiaoHang == 3 && p.TrangThai == true).ToList();
             return View();
         }
         [HttpGet("CartAdmin/Cancel/{id}")]
@@ -44,6 +49,7 @@ namespace DoAn.Areas.Admin.Controllers
             }
 
             ViewBag.hoaDon = data.HoaDon.ToList();
+            ViewBag.waitHoaDon = data.HoaDon.Where(p => p.TrangThai == null).ToList();
             return View("Index");
         }
         [HttpGet("CartAdmin/Accept/{id}")]
@@ -54,6 +60,7 @@ namespace DoAn.Areas.Admin.Controllers
             data.Entry(hd).State = EntityState.Modified;
             data.SaveChanges();
             ViewBag.hoaDon = data.HoaDon.ToList();
+            ViewBag.waitHoaDon = data.HoaDon.Where(p => p.TrangThai == null).ToList();
             return View("Index");
         }
     }

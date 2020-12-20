@@ -43,6 +43,7 @@ namespace DoAn.Controllers
             }
             var user = _mapper.Map<User>(userModel);
             user.UserName = userModel.Email;
+            user.DiemTichLuy = 0;
             var result = await _userManager.CreateAsync(user, userModel.Password);
             if(!result.Succeeded)
             {
@@ -127,11 +128,13 @@ namespace DoAn.Controllers
             ViewBag.hoaDon = data.HoaDon.Where(p => p.UserId == user.Id).ToList();
             return RedirectToAction("DetailUser","Account");
         }
+        [Authorize]
         public async Task<IActionResult> EditUserAsync()
         {
             User user = await _userManager.GetUserAsync(User);
             return View(user);
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> EditUserConfirmAsync( User user)
         {

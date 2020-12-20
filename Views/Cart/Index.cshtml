@@ -68,74 +68,85 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewBag.cart)
+                        @if (ViewBag.cart == null)
                         {
+                            <h4>Giỏ hàng bạn đang trống!</h4>
+                        }
+                        else
+                        {
+
+                            @foreach (var item in ViewBag.cart)
+                            {
+                                <tr>
+                                    <td style="display:none;">@item.SanPham.MaSp</td>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="~/images/@item.SanPham.HinhAnh" width="150" height="150" />
+                                            </div>
+                                            <div class="media-body">
+                                                <p>@item.SanPham.TenSp</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>@(item.SanPham.Gia - item.SanPham.GiamGia ) VNĐ</h5>
+                                    </td>
+                                    <td>
+                                        <form asp-action="Update" asp-controller="Cart" asp-route-id="@item.SanPham.MaSp">
+                                            <input class="input-number" type="number" name="soLuong" value="@item.SoLuong" min="1" max="@item.SanPham.SoLuong">
+                                            <input type="hidden" name="id" value="@item.SanPham.MaSp" />
+                                            <input class="btn-primary" type="submit" value="Update" />
+                                        </form>
+                                        <p><a asp-controller="cart" asp-action="Remove" asp-route-id="@item.SanPham.MaSp">Remove</a></p>
+                                    </td>
+                                    <td>
+                                        <h5>@((item.SanPham.Gia - item.SanPham.GiamGia) * item.SoLuong) VNĐ</h5>
+                                    </td>
+                                </tr>
+
+
+
+                            }
+                            <tr class="bottom_button">
+                                <td>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                @*<td>
+                    <div class="cupon_text float-right">
+                        <a class="btn_1" href="#">Update Cart</a>
+                    </div>
+                </td>*@
+                            </tr>
                             <tr>
-                                <td style="display:none;">@item.SanPham.MaSp</td>
+                                <td></td>
+                                <td></td>
                                 <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="~/images/@item.SanPham.HinhAnh" width="150" height="150" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p>@item.SanPham.TenSp</p>
-                                        </div>
-                                    </div>
+                                    <h5>Tạm tính</h5>
                                 </td>
                                 <td>
-                                    <h5>@item.SanPham.Gia VNĐ</h5>
-                                </td>
-                                <td>
-                                    <form asp-action="Update" asp-controller="Cart" asp-route-id="@item.SanPham.MaSp">
-                                        <input class="input-number" type="number" name="soLuong" value="@item.SoLuong" min="1" max="@item.SanPham.SoLuong">
-                                        <input type="hidden" name="id" value="@item.SanPham.MaSp" />
-                                        <input class="btn-primary" type="submit" value="Update" />
-                                    </form>
-                                    <p><a asp-controller="cart" asp-action="Remove" asp-route-id="@item.SanPham.MaSp">Remove</a></p>
-                                </td>
-                                <td>
-                                    <h5>@(item.SanPham.Gia * item.SoLuong) VNĐ</h5>
+                                    <h5>@ViewBag.total VNĐ</h5>
                                 </td>
                             </tr>
-
-
-
                         }
-                        <tr class="bottom_button">
-                            <td>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            @*<td>
-                                    <div class="cupon_text float-right">
-                                        <a class="btn_1" href="#">Update Cart</a>
-                                    </div>
-                                </td>*@
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <h5>Tạm tính</h5>
-                            </td>
-                            <td>
-                                <h5>@ViewBag.total VNĐ</h5>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="checkout_btn_inner float-right">
                     <a class="btn_1" asp-action="Index" asp-controller="Home">Continue Shopping</a>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (ViewBag.cart != null)
                     {
-                        <a asp-action="PaypalCheckout" asp-controller="Cart">
-                            <img src="~/images/paypal_checkout.gif" height="100" />
-                        </a>
-                        <a class="btn_1 checkout_btn_1" asp-action="CheckOutWithSignIn" asp-controller="Cart">Proceed to checkout</a>
-                    }
-                    else
-                    {
-                        <a class="btn_1 checkout_btn_1" asp-action="AddInformation" asp-controller="Cart">Proceed to checkout</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="CheckBill" asp-controller="Cart" asp-route-typePayment="2">
+                                <img src="~/images/paypal_checkout.gif" height="100" />
+                            </a>
+                            <a class="btn_1 checkout_btn_1" asp-action="CheckBill" asp-controller="Cart" asp-route-typePayment="1">Proceed to checkout</a>
+                        }
+                        else
+                        {
+                            <a class="btn_1 checkout_btn_1" asp-action="AddInformation" asp-controller="Cart">Proceed to checkout</a>
+                        }
                     }
                 </div>
             </div>

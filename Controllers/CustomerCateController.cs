@@ -20,7 +20,7 @@ namespace DoAn.Controllers
             //if (details.Count.Equals(0)) return NotFound();
             //ViewBag.truyen = details;
             //return View();
-            List<SanPham> ds = context.SanPham.Where(p=>p.Deleted == false).ToList();
+            List<SanPham> ds = context.SanPham.Where(p=>p.MaLoaiSp == id && p.Deleted == false).ToList();
             foreach (SanPham item in ds)
             {
                 item.LoaiSp = context.LoaiSp.Find(item.MaLoaiSp);
@@ -50,6 +50,17 @@ namespace DoAn.Controllers
         {
             List<SanPham> truyen = context.SanPham.Where(s => s.TenSp.Contains(tensp) && s.Deleted == false).ToList();
             return View("Index",truyen);
+        }
+        [Route("id")]
+        public IActionResult CateSearch(int id)
+        {
+            List<SanPham> truyen = context.SanPham.Where(s => s.MaLoaiSp == id && s.Deleted == false).ToList();
+            return View("Index", truyen);
+        }
+        public IActionResult CateSearchOther()
+        {
+            List<SanPham> truyen = context.SanPham.Where(s => s.MaLoaiSp != 1 && s.MaLoaiSp != 2 && s.Deleted == false).ToList();
+            return View("Index", truyen);
         }
     }
 }

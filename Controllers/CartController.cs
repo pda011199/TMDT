@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using PayPal.Core;
 using PayPal.v1.Payments;
 using BraintreeHttp;
+using Microsoft.AspNetCore.Routing;
 
 namespace DoAn.Controllers
 {
@@ -37,9 +38,12 @@ namespace DoAn.Controllers
         }
         public IActionResult Index()
         {
-            var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
-            ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
+            if(SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
+            {
+                var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => (item.SanPham.Gia - item.SanPham.GiamGia) * item.SoLuong);
+            }    
             return View();
         }
         [Route("buy/{id}")]
@@ -68,6 +72,7 @@ namespace DoAn.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [Route("remove/{id}")]
         public IActionResult Remove(int id)
         {
@@ -77,6 +82,7 @@ namespace DoAn.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
+
         private int isExist(int id)
         {
             List<ProductToCart> cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
@@ -87,6 +93,7 @@ namespace DoAn.Controllers
             }
             return -1;
         }
+
         [Route("update/{id}")]
         public IActionResult Update(int id, int soLuong)
         {
@@ -96,73 +103,48 @@ namespace DoAn.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
+
         public IActionResult AddInformation()
         {
             var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
+            double sum = cart.Sum(item => (item.SanPham.Gia - item.SanPham.GiamGia) * item.SoLuong);
+            double vat = cart.Sum(item => item.SanPham.Gia * item.SoLuong) / 10;
             ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
+            ViewBag.total = sum + vat;
+            ViewBag.vat = vat;
             return View();
         }
-        public async Task<IActionResult> CheckOutWithSignInAsync()
+
+        public async Task<IActionResult> CheckOutWithSignInAsync(string maKhuyenMai=null)
         {
             User user = await userManager.GetUserAsync(User);
             if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
             {
                 var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
-                double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
-                HoaDon hd = new HoaDon
+                double tamtinh = cart.Sum(item => (item.SanPham.Gia - item.SanPham.GiamGia) * item.SoLuong);
+                double vat = cart.Sum(item => item.SanPham.Gia * item.SoLuong) / 10;
+                var tongtien = tamtinh + vat;
+                if (maKhuyenMai != null)
                 {
-                    UserId = user.Id,
-                    Deleted = false,
-                    TongTien = sum,
-                    Ngay = DateTime.Now,
-                    SDT=user.PhoneNumber,
-                    Email = user.Email,
-                    DiaChi = user.DiaChi,
-                    HoTen = user.HoTen,
-                    LoaiTT = 1,
-                    TinhTrang = false
-                };
-                data.HoaDon.Add(hd);
-                data.SaveChanges();
-                foreach (var item in cart)
-                {
-                    CT_HoaDon cthd = new CT_HoaDon
-                    {
-                        MaHD = hd.MaHD,
-                        MaSp = item.SanPham.MaSp,
-                        SoLuong = item.SoLuong             
-                    };
-                    var sp = data.SanPham.Find(item.SanPham.MaSp);
-                    sp.SoLuong -= item.SoLuong;
-                    data.Entry(sp).State = EntityState.Modified;
-
-                    data.CTHoaDon.Add(cthd);
-                    data.SaveChanges();
+                    var mkm = data.MaKhuyenMai.Find(maKhuyenMai);
+                    tongtien = (tongtien * (100 - mkm.GiaTri)) / 100;
                 }
-                await SendMailAsync(user.HoTen, user.DiaChi, user.PhoneNumber, user.Email, hd);
-            }
-            return RedirectToAction(nameof(HomeController.Index),"Home");
-        }
-        public async Task<IActionResult> CheckOutWithoutSignInAsync(string hoTen, string diaChi, string sDT, string eMail)
-        {
-            if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
-            {
-                var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
-                double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
-
                 //tao hoa don
                 HoaDon hd = new HoaDon
                 {
-                    HoTen = hoTen,
-                    DiaChi = diaChi,
-                    SDT = sDT,
-                    Email = eMail,
-                    Deleted = false,
-                    TongTien = sum,
+                    HoTen = user.HoTen,
+                    DiaChi = user.DiaChi,
+                    UserId = user.Id,
+                    SDT = user.PhoneNumber,
+                    Email = user.Email,
+                    TamTinh = tamtinh,
+                    TongTien = tongtien,
                     Ngay = DateTime.Now,
+                    GiaoHang = 1,
                     LoaiTT = 1,
-                    TinhTrang = false
+                    VAT = vat,
+                    TinhTrang = false,
+                    MaKhuyenMai = maKhuyenMai
                 };
                 data.HoaDon.Add(hd);
                 data.SaveChanges();
@@ -182,16 +164,71 @@ namespace DoAn.Controllers
                     data.CTHoaDon.Add(cthd);
                     data.SaveChanges();
                 }
-                await SendMailAsync(hoTen, diaChi, sDT, eMail, hd);
+                //user.DiemTichLuy = (int)(hd.TamTinh / 10000);
+                //await userManager.UpdateAsync(user);
+                await SendMailAsync(user.HoTen, user.Email, hd);
             }
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index),"Home");
         }
-        private async Task SendMailAsync(string hoTen, string diaChi, string sDT, string eMail, HoaDon hd)
+
+        public async Task<IActionResult> CheckOutWithoutSignInAsync(string hoTen, string diaChi, string sDT, string eMail, string maKhuyenMai)
         {
             if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
             {
                 var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
-                double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
+
+                double tamtinh = cart.Sum(item => (item.SanPham.Gia - item.SanPham.GiamGia) * item.SoLuong);
+                double vat = cart.Sum(item => item.SanPham.Gia * item.SoLuong)/10;
+                var tongtien = tamtinh + vat;
+                if(maKhuyenMai != null)
+                {
+                    var mkm = data.MaKhuyenMai.Find(maKhuyenMai);
+                    tongtien = (tongtien * (100 - mkm.GiaTri)) / 100;
+                }    
+                //tao hoa don
+                HoaDon hd = new HoaDon
+                {
+                    HoTen = hoTen,
+                    DiaChi = diaChi,
+                    SDT = sDT,
+                    Email = eMail,
+                    TamTinh = tamtinh,
+                    TongTien = tongtien,
+                    Ngay = DateTime.Now,
+                    GiaoHang = 1,
+                    LoaiTT = 1,
+                    VAT = vat ,
+                    TinhTrang = false,
+                    MaKhuyenMai = maKhuyenMai
+                };
+                data.HoaDon.Add(hd);
+                data.SaveChanges();
+                foreach (var item in cart)
+                {
+                    //Tao chi tiet hoa don 
+                    CT_HoaDon cthd = new CT_HoaDon
+                    {
+                        MaHD = hd.MaHD,
+                        MaSp = item.SanPham.MaSp,
+                        SoLuong = item.SoLuong
+                    };
+                    //Update so luong cua san pham
+                    var sp = data.SanPham.Find(item.SanPham.MaSp);
+                    sp.SoLuong -= item.SoLuong;
+                    data.Entry(sp).State = EntityState.Modified;
+                    data.CTHoaDon.Add(cthd);
+                    data.SaveChanges();
+                }
+                await SendMailAsync(hoTen, eMail, hd);
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        private async Task SendMailAsync(string hoTen, string eMail, HoaDon hd)
+        {
+            if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
+            {
+                var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
 
                 string s = "<table>" + "<tr><th>Tên sản phẩm</th>" +
                     "<th>Số lượng</th>" +
@@ -201,10 +238,27 @@ namespace DoAn.Controllers
                 {
                     s = s + "<td>" + item.SanPham.TenSp + "</td>" +
                         "<td>" + item.SoLuong + "</td>" +
-                        "<td>" + item.SanPham.Gia + "</td>" +
-                        "<td>" + item.SoLuong * item.SanPham.Gia + "</td>";
+                        "<td>" + (item.SanPham.Gia - item.SanPham.GiamGia) + "</td>" +
+                        "<td>" + item.SoLuong * (item.SanPham.Gia - item.SanPham.GiamGia) + "VNĐ </td><br/>";
                 }
-                s += "<tr><td>Tổng tiền</td><td>" + sum + " VNĐ</td></tr></tr>";
+                s+= "<tr><td>Tạm tính</td><td></td><td></td><td>"
+                        + hd.TamTinh +
+                        " VNĐ</td></tr></tr><br/>";
+                s+= "<tr><td>VAT</td><td></td><td></td><td>"
+                        + hd.VAT +
+                        " VNĐ</td></tr></tr><br/>";
+                if (hd.MaKhuyenMai != null)
+                {
+                    var km = data.MaKhuyenMai.Find(hd.MaKhuyenMai);
+                    double tkm = ((hd.TamTinh+hd.VAT) * km.GiaTri) / 100;
+                    s += "<tr><td>Giảm giá</td><td>" 
+                        + tkm + 
+                        " VNĐ</td></tr></tr><br/>";
+
+                }    
+                s += "<tr><td>Tổng tiền</td><td>"
+                        + hd.TongTien +
+                        " VNĐ</td></tr></tr><br/>";
                 MailContent content = new MailContent
                 {
                     To = eMail,
@@ -216,29 +270,51 @@ namespace DoAn.Controllers
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
         }
-        [Authorize]
-        public async Task<IActionResult> PaypalCheckout()
+        
+        
+        public IActionResult CheckBill(int typePayment)
         {
-
-            var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
-            if(cart == null)
-            {
-                return View("Index");
-            }
             
+            if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
+            {
 
+
+                if (typePayment == 1)
+                {
+                    ViewBag.action = "CheckOutWithSignIn";
+                }
+                else if (typePayment == 2)
+                {
+                    ViewBag.action = "PaypalCheckout";
+                }
+                else
+                {
+                    ViewBag.action = "CheckOutWithoutSignIn";
+                }
+                var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
+                double sum = cart.Sum(item => (item.SanPham.Gia - item.SanPham.GiamGia) * item.SoLuong);
+                double vat = cart.Sum(item => item.SanPham.Gia * item.SoLuong) / 10;
+                ViewBag.cart = cart;
+                ViewBag.total = sum + vat;
+                ViewBag.vat = vat;
+                return View();
+            }
+            ViewBag.status = 1;
+            return View("Index");
+        }
+
+        [Authorize]
+        public async System.Threading.Tasks.Task<IActionResult> PaypalCheckout()
+        {
+            var cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
             var environment = new SandboxEnvironment(_clientId, _secretKey);
             var client = new PayPalHttpClient(environment);
-
-            cart.Sum(item => item.SanPham.Gia * item.SoLuong);
-
-
             #region Create Paypal Order
             var itemList = new ItemList()
             {
                 Items = new List<Item>()
             };
-            var total = Math.Round(cart.Sum(item => item.SanPham.Gia * item.SoLuong) / TyGiaUSD, 2);
+            var total = Math.Round(cart.Sum(p=>p.SanPham.Gia)/TyGiaUSD,2);
             foreach (var item in cart)
             {
                 itemList.Items.Add(new Item()
@@ -309,7 +385,7 @@ namespace DoAn.Controllers
                         paypalRedirectUrl = lnk.Href;
                     }
                 }
-                
+
                 return Redirect(paypalRedirectUrl);
             }
             catch (HttpException httpException)
@@ -321,97 +397,138 @@ namespace DoAn.Controllers
                 return Redirect("/Cart/CheckoutFail");
             }
         }
-
-        public async Task<IActionResult> CheckoutFailAsync()
+        public IActionResult CheckoutFail()
         {
             //Tạo đơn hàng trong database với trạng thái thanh toán là "Chưa thanh toán"
-            List<ProductToCart> cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
-            User user = await userManager.GetUserAsync(User);
-            
-            if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
-            {
-                double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
-                HoaDon hd = new HoaDon
-                {
-                    UserId = user.Id,
-                    Deleted = false,
-                    TongTien = sum,
-                    Ngay = DateTime.Now,
-                    SDT = user.PhoneNumber,
-                    Email = user.Email,
-                    DiaChi = user.DiaChi,
-                    HoTen = user.HoTen,
-                    LoaiTT = 2,
-                    TinhTrang = false,
-                    TrangThai = false
-                };
-                data.HoaDon.Add(hd);
-                data.SaveChanges();
-                foreach (var item in cart)
-                {
-                    CT_HoaDon cthd = new CT_HoaDon
-                    {
-                        MaHD = hd.MaHD,
-                        MaSp = item.SanPham.MaSp,
-                        SoLuong = item.SoLuong
-                    };
-                    var sp = data.SanPham.Find(item.SanPham.MaSp);
-                    sp.SoLuong -= item.SoLuong;
-                    data.Entry(sp).State = EntityState.Modified;
+            //List<ProductToCart> cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
+            //User user = await userManager.GetUserAsync(User);
 
-                    data.CTHoaDon.Add(cthd);
-                    data.SaveChanges();
-                }
-                
-            }
+            //if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
+            //{
+            //    double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong) + 30000;
+            //    HoaDon hd = new HoaDon
+            //    {
+            //        UserId = user.Id,
+            //        TongTien = sum ,
+            //        Ngay = DateTime.Now,
+            //        SDT = user.PhoneNumber,
+            //        Email = user.Email,
+            //        DiaChi = user.DiaChi,
+            //        HoTen = user.HoTen,
+            //        LoaiTT = 2,
+            //        TinhTrang = false,
+            //        TrangThai = false
+            //    };
+            //    data.HoaDon.Add(hd);
+            //    data.SaveChanges();
+            //    foreach (var item in cart)
+            //    {
+            //        CT_HoaDon cthd = new CT_HoaDon
+            //        {
+            //            MaHD = hd.MaHD,
+            //            MaSp = item.SanPham.MaSp,
+            //            SoLuong = item.SoLuong
+            //        };
+            //        var sp = data.SanPham.Find(item.SanPham.MaSp);
+            //        sp.SoLuong -= item.SoLuong;
+            //        data.Entry(sp).State = EntityState.Modified;
+
+            //        data.CTHoaDon.Add(cthd);
+            //        data.SaveChanges();
+            //    }
+
+            //}
             return View();
         }
 
-        public async Task<IActionResult> CheckoutSuccessAsync()
+        public async Task<IActionResult> CheckoutSuccess()
         {
             //Tạo đơn hàng trong database với trạng thái thanh toán là "Paypal" và thành công
             List<ProductToCart> cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
             User user = await userManager.GetUserAsync(User);
-
-            if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
+            string maKhuyenMai = null;
+            double tamtinh = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
+            var tongtien = tamtinh + tamtinh / 10;
+            if (SessionHelper.GetObjectFromJson<MaKhuyenMai>(HttpContext.Session, "coupon") != null)
             {
-                double sum = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
-                HoaDon hd = new HoaDon
-                {
-                    UserId = user.Id,
-                    Deleted = false,
-                    TongTien = sum,
-                    Ngay = DateTime.Now,
-                    SDT = user.PhoneNumber,
-                    Email = user.Email,
-                    DiaChi = user.DiaChi,
-                    HoTen = user.HoTen,
-                    LoaiTT = 2,
-                    TinhTrang = true,
-                    TrangThai = true
-                };
-                data.HoaDon.Add(hd);
-                data.SaveChanges();
-                foreach (var item in cart)
-                {
-                    CT_HoaDon cthd = new CT_HoaDon
-                    {
-                        MaHD = hd.MaHD,
-                        MaSp = item.SanPham.MaSp,
-                        SoLuong = item.SoLuong
-                    };
-                    var sp = data.SanPham.Find(item.SanPham.MaSp);
-                    sp.SoLuong -= item.SoLuong;
-                    data.Entry(sp).State = EntityState.Modified;
-
-                    data.CTHoaDon.Add(cthd);
-                    data.SaveChanges();
-                }
-                await SendMailAsync(user.HoTen, user.DiaChi, user.PhoneNumber, user.Email, hd);
+                maKhuyenMai = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "coupon");
+                var mkm = data.MaKhuyenMai.Find(maKhuyenMai);
+                tongtien = (tongtien * (100 - mkm.GiaTri)) / 100;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "counpon", null);
             }
+            //tao hoa don
+            HoaDon hd = new HoaDon
+            {
+                HoTen = user.HoTen,
+                DiaChi = user.DiaChi,
+                SDT = user.PhoneNumber,
+                Email = user.Email,
+                TamTinh = tamtinh,
+                TongTien = tongtien,
+                Ngay = DateTime.Now,
+                GiaoHang = 1,
+                LoaiTT = 2,
+                VAT = tamtinh / 10,
+                TinhTrang = true,
+                MaKhuyenMai = maKhuyenMai
+            };
+            data.HoaDon.Add(hd);
+            data.SaveChanges();
+            foreach (var item in cart)
+            {
+                //Tao chi tiet hoa don 
+                CT_HoaDon cthd = new CT_HoaDon
+                {
+                    MaHD = hd.MaHD,
+                    MaSp = item.SanPham.MaSp,
+                    SoLuong = item.SoLuong
+                };
+                //Update so luong cua san pham
+                var sp = data.SanPham.Find(item.SanPham.MaSp);
+                sp.SoLuong -= item.SoLuong;
+                data.Entry(sp).State = EntityState.Modified;
+                data.CTHoaDon.Add(cthd);
+                data.SaveChanges();
+            }
+            user.DiemTichLuy = (int)(hd.TamTinh / 10000);
+            await userManager.UpdateAsync(user);
+            await SendMailAsync(user.HoTen, user.Email, hd);
+
             return View();
         }
 
+        [HttpPost]
+        public JsonResult AddCoupon(string maKm)
+        {
+            var mkm = data.MaKhuyenMai.Find(maKm);
+            if (mkm == null)
+            {
+                return Json(new
+                {
+                    status = 1
+                }) ;
+
+            }
+            else
+            {
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "coupon", mkm);
+                return Json(new
+                {
+                    status = 2,
+                    giatri = mkm.GiaTri
+                });
+
+            }
+        }
+        [HttpPost]
+        public JsonResult RemoveCoupon()
+        {
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "coupon", null);
+            return Json(new
+            {
+
+            });
+        }
 
     }
 }
