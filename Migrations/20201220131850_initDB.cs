@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DoAn.Migrations
 {
-    public partial class initData : Migration
+    public partial class initDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -340,17 +340,17 @@ namespace DoAn.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "21c8d41e-a9c5-49e0-9242-e43397f6dfbc", "62d736f8-09ca-4df8-8d89-7c4c2a1bfd0f", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "9d6b21aa-6bb6-4596-8eef-95bf110fd770", "60e4f8e3-5224-465b-87e9-a3d4ae18206b", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7750d4c5-0c66-4073-98fa-d1b34bfd59d9", "acd133bb-e1a1-4779-9d08-b8c8513750bd", "Customer", "CUSTOMER" });
+                values: new object[] { "05051e37-63ba-43c5-b4ef-f57ad691c591", "364950cf-2aa1-45f4-bab0-797b09f1ad3d", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "12b1552f-a7be-4014-b6fc-dac871b2b3b3", "060eab60-d5fd-4fc2-a56d-c30bdc25aff2", "Employee", "EMPLOYEE" });
+                values: new object[] { "b912cc6d-4d29-46d7-aee9-90426294b091", "b051f221-ae95-4ac3-a394-ba20338b8019", "Employee", "EMPLOYEE" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

@@ -1,4 +1,4 @@
-﻿
+﻿@model DoAn.Models.Domain.User;
 @{
     ViewData["Title"] = "CheckBill";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -20,25 +20,47 @@
 <!--================Checkout Area =================-->
 <section class="checkout_area section_padding">
     <div class="container">
+        <h3>THANH TOÁN</h3>
         <hr />
         <div class="billing_details">
             <div class="row">
-                <div class="col-lg-8">
-                    <h3>THANH TOÁN</h3>
-                    <form class="row contact_form"  asp-action=@ViewBag.action asp-controller="Cart">
-                        <div class="col-md-6 form-group ">
-                            <input type="text" class="form-control" name="maKhuyenmai" id="maKhuyenMai" placeholder="Mã Khuyến Mãi" />
-                            <p id="couponNotification"></p>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <a href="#" class="btn btn-light" id="btn-maKhuyenMai">Áp dụng mã</a>
-                            <a href="#" class="btn btn-danger" id="btn-huyMaKhuyenMai" style="display:none">Hủy</a>
-                        </div>
+                <div class="col-lg-6">
 
-                        <button type="submit" class="btn_3">ĐẶT MUA</button>
-                    </form>
+                    <div class="order_box">
+                        <h2>THÔNG TIN THANH TOÁN</h2>
+                        <ul class="list">
+                            <li>
+                                <a href="#">HỌ TÊN <span>@ViewBag.user.HoTen</span></a>
+                            </li>
+                            <li>
+                                <a href="#">EMAIL <span>@ViewBag.user.Email</span></a>
+                            </li>
+                            <li>
+                                <a href="#">SĐT <span>@ViewBag.user.PhoneNumber</span></a>
+                            </li>
+                            <li>
+                                <a href="#">ĐỊA CHỈ <span>@ViewBag.user.DiaChi</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order_box">
+                        <h3>MÃ COUPON</h3>
+                        <form class="row contact_form" asp-action=@ViewBag.action asp-controller="Cart">
+                            <div class="col-md-6 form-group ">
+                                <input type="text" class="form-control" name="maKhuyenmai" id="maKhuyenMai" placeholder="Mã Khuyến Mãi" />
+                                <p id="couponNotification"></p>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <a href="#" class="btn btn-light" id="btn-maKhuyenMai">Áp dụng mã</a>
+                                <a href="#" class="btn btn-danger" id="btn-huyMaKhuyenMai" style="display:none">Hủy</a>
+                            </div>
+
+                            <button type="submit" class="btn_3">ĐẶT MUA</button>
+                        </form>
+                    </div>
+                    
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="order_box">
                         <h2>NỘI DUNG GIỎ HÀNG</h2>
                         <ul class="list">
