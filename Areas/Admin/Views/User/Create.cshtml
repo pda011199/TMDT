@@ -1,0 +1,50 @@
+﻿@model DoAn.Models.UserRegisterModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Thêm người dùng</h1>
+<form class="row contact_form" asp-action="Create" asp-controller="User" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-12 form-group p_star">
+        <input type="text" class="form-control" asp-for="HoTen" placeholder="Họ tên">
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+    <div class="col-md-12 form-group p_star">
+        <input type="text" class="form-control" asp-for="DiaChi" placeholder="Địa chỉ">
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+    <div class="col-md-12 form-group p_star">
+        <input type="text" class="form-control" asp-for="PhoneNumber" placeholder="Số điện thoại">
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="col-md-12 form-group p_star">
+        <input type="text" class="form-control" asp-for="Email" placeholder="Email">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-12 form-group p_star">
+        <input type="password" class="form-control" asp-for="Password" placeholder="Mật khẩu">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="col-md-12 form-group p_star">
+        <input type="password" class="form-control" asp-for="ConfirmPassword" placeholder="Xác nhận mật khẩu">
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Loại người dùng</label>
+        <div class="col-sm-6">
+            <select name="Role">
+                <option value="Employee">
+                    Nhân viên
+                </option>
+                <option value="Customer">Khách hàng</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12 form-group">
+        <div class="form-group">
+            <input type="submit" value="Tạo" class="btn_3" />
+        </div>
+    </div>
+</form>

@@ -926,3 +926,12 @@ D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Are
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coupon\Edit.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Cart\CheckBill.cshtml.g.cs
 D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\DoAn.csprojAssemblyReference.cache
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Revenue\Index.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\User\Create.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\User\Edit.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\ChangePasswordConfirmation.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\ChangePassword.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPasswordConfirmation.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPassword.cshtml.g.cs
+D:\Bài tập\Thương mại điện tử\TMDT\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPasswordConfirmation.cshtml.g.cs

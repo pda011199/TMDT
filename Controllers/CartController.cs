@@ -27,6 +27,7 @@ namespace DoAn.Controllers
         private readonly string _clientId;
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;
+        public string format = "dd/MM/yyyy";
 
         public CartController(DataContext data, UserManager<User> userManager, ISendMailService sendMailService, IConfiguration config)
         {
@@ -139,7 +140,7 @@ namespace DoAn.Controllers
                     Email = user.Email,
                     TamTinh = tamtinh,
                     TongTien = tongtien,
-                    Ngay = DateTime.Now,
+                    Ngay = DateTime.Today,
                     GiaoHang = 1,
                     LoaiTT = 1,
                     VAT = vat,
@@ -194,7 +195,7 @@ namespace DoAn.Controllers
                     Email = eMail,
                     TamTinh = tamtinh,
                     TongTien = tongtien,
-                    Ngay = DateTime.Now,
+                    Ngay = DateTime.Today,
                     GiaoHang = 1,
                     LoaiTT = 1,
                     VAT = vat ,
@@ -446,16 +447,8 @@ namespace DoAn.Controllers
             //Tạo đơn hàng trong database với trạng thái thanh toán là "Paypal" và thành công
             List<ProductToCart> cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
             User user = await userManager.GetUserAsync(User);
-            string maKhuyenMai = null;
             double tamtinh = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
             var tongtien = tamtinh + tamtinh / 10;
-            if (SessionHelper.GetObjectFromJson<MaKhuyenMai>(HttpContext.Session, "coupon") != null)
-            {
-                maKhuyenMai = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "coupon");
-                var mkm = data.MaKhuyenMai.Find(maKhuyenMai);
-                tongtien = (tongtien * (100 - mkm.GiaTri)) / 100;
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "counpon", null);
-            }
             //tao hoa don
             HoaDon hd = new HoaDon
             {
@@ -465,12 +458,12 @@ namespace DoAn.Controllers
                 Email = user.Email,
                 TamTinh = tamtinh,
                 TongTien = tongtien,
-                Ngay = DateTime.Now,
+                Ngay = DateTime.Today,
                 GiaoHang = 1,
                 LoaiTT = 2,
                 VAT = tamtinh / 10,
                 TinhTrang = true,
-                MaKhuyenMai = maKhuyenMai
+                TrangThai = true
             };
             data.HoaDon.Add(hd);
             data.SaveChanges();

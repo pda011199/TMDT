@@ -30,9 +30,9 @@
                             <h3>Lọc sản phẩm</h3>
                         </div>
                         <div class="widgets_inner">
-                            <ul class="list">
+                            <!--<ul class="list">-->
                                 @*<p>Brands</p>*@
-                                <li>
+                                <!--<li>
                                     <input type="radio" aria-label="Radio button for following text input">
                                     <a asp-controller="CustomerCate" asp-action="SortByName">Theo tên</a>
                                 </li>
@@ -44,7 +44,15 @@
                                     <input type="radio" aria-label="Radio button for following text input">
                                     <a asp-controller="CustomerCate" asp-action="SortByPriceDesc">Theo giá (Giảm dần)</a>
                                 </li>
-                            </ul>
+                            </ul>-->
+                            <form asp-action="OptionSort" asp-controller="CustomerCate">
+                                <select name="option">
+                                    <option value="1">Theo tên</option>
+                                    <option value="2">Theo giá(tăng dần)</option>
+                                    <option value="3">Theo giá(giảm dần)</option>
+                                </select>
+                                <input type="submit" value="Lọc" />
+                            </form>
                         </div>
                     </aside>
 

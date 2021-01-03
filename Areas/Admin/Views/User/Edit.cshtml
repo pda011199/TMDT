@@ -1,0 +1,42 @@
+﻿@model DoAn.Models.Domain.User
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2 style="text-align:center; font-weight:bold">Chỉnh sửa thông tin khách hàng</h2>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <form asp-action="Edit" asp-controller="User" asp-area="Admin" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="HoTen" class="control-label">Họ tên</label>
+                    <input asp-for="HoTen" class="form-control" />
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label">Số điện thoại</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DiaChi" class="control-label">Email</label>
+                    <textarea rows="6" asp-for="DiaChi" class="form-control"></textarea>
+                    <span asp-validation-for="DiaChi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                    <a asp-controller="Account" asp-action="DetailUser" class="btn btn-light">Quay về</a>
+                </div>
+                @if (ViewBag.Status == 1)
+                {
+                    <p class="text-warning"> Thay đổi thành công!</p>
+                }
+            </form>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+</div>
+

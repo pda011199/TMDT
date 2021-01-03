@@ -27,6 +27,20 @@ namespace DoAn.Controllers
             }
             return View(ds);
         }
+        public IActionResult OptionSort(int option)
+        {
+            switch(option)
+            {
+                case 1:
+                    return RedirectToAction("SortByName");
+                case 2:
+                    return RedirectToAction("SortByPrice");
+                case 3:
+                    return RedirectToAction("SortByPriceDesc");
+                default:
+                    return View("Index");
+            }
+        }
         public IActionResult SortByName()
         {
             List<SanPham> truyen = context.SanPham.OrderBy(s => s.TenSp).Where(p => p.Deleted == false).ToList();
