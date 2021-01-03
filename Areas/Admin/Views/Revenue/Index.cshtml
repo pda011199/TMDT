@@ -3,29 +3,138 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Doanh thu</h1>
 </div>
 <div class="tab">
-    <form asp-action="Index" asp-controller="Revenue">
-        Từ
-        <input type="date" name="ngayBatDau" value="@ViewBag.ngayBatDau" />
-        Đến
-        <input type="date" name="ngayKetThuc" value="@ViewBag.ngayKetThuc" />
-        <select name="option">
-            <option value="1">Tất cả đơn hàng</option>
-            <option value="2">Đơn hàng đã thanh toán</option>
-            <option value="3">Đơn hàng thanh toán khi nhận</option>
-            <option value="4">Đơn hàng thanh toán trực tuyến</option>
-        </select>
-        <input type="submit" value="Lọc" />
+    <form class="form-inline" asp-action="Index" asp-controller="Revenue">
+        <div class="form-group" >
+            Từ 
+            <input class="form-control" type="date" name="ngayBatDau" value="@ViewBag.ngayBatDau" style="margin-left: 5px"/>
+            Đến 
+            <input class="form-control" type="date" name="ngayKetThuc" value="@ViewBag.ngayKetThuc" style="margin-left: 5px"/>
+            <select class="form-control" name="option" style="margin-left: 5px">
+                <option value="1">Tất cả đơn hàng</option>
+                <option value="2">Đơn hàng đã thanh toán</option>
+                <option value="3">Đơn hàng thanh toán khi nhận</option>
+                <option value="4">Đơn hàng thanh toán trực tuyến</option>
+            </select>
+            <input class="btn btn-primary" type="submit" value="Lọc" style="margin-left: 5px"/>
+        </div>
+        
     </form>
 </div>
-<div>
-    <label>@ViewBag.m</label>
-    <label>Tổng doanh thu: @ViewBag.tongDoanhThu VNĐ</label>
+<hr />
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">@ViewBag.m</h1>
 </div>
-<div class="card-body">
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng doanh thu</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.tongDoanhThu VNĐ</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Bảng doanh thu</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã HĐ</th>
+                        <th>Họ và tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Tổng tiền</th>
+                        <th>Loại thanh toán</th>
+                        <th>Thanh Toán</th>
+                        <th>Trạng thái</th>
+                        <th>Giao hàng</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody id="waitHoaDon">
+                    @foreach (var item in ViewBag.hoaDon)
+                    {
+                        <tr>
+                            <td>@item.MaHD</td>
+                            <td>@item.HoTen</td>
+                            <td>@item.SDT</td>
+                            <td>@item.DiaChi</td>
+                            <td>@item.TongTien VNĐ</td>
+
+                            @if (item.LoaiTT == 2)
+                            {
+                                <td>Paypal</td>
+                            }
+                            else
+                            {
+                                <td>Khi nhận hàng</td>
+                            }
+                            @if (item.TinhTrang == true)
+                            {
+                                <td>Đã thanh toán</td>
+                            }
+                            else
+                            {
+                                <td>Chưa thanh toán</td>
+                            }
+                            @if (item.TrangThai == null)
+                            {
+                                <td>Đang chờ</td>
+                            }
+                            @if (item.TrangThai == false)
+                            {
+                                <td>Đã hủy</td>
+                            }
+                            @if (item.TrangThai == true)
+                            {
+                                <td>Thành công</td>
+                            }
+                            @if (item.GiaoHang == 1)
+                            {
+                                <td>Chưa giao hàng</td>
+                            }
+                            else if (item.GiaoHang == 2)
+                            {
+                                <td>Đang giao hàng</td>
+                            }
+                            else if (item.GiaoHang == 3)
+                            {
+                                <td>Đã giao thành công</td>
+                            }
+                            else
+                            {
+                                <td>Giao hàng không thành công</td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--<div class="card-body">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
             <thead>
@@ -43,16 +152,16 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody id="waitHoaDon">
+            <tbody id="waitHoaDon">-->
                 @*Danh sách hóa đơn đang đợi*@
-                @foreach (var item in ViewBag.hoaDon)
+                <!--@foreach (var item in ViewBag.hoaDon)
                 {
                     <tr>
                         <td>@item.MaHD</td>
                         <td>@item.HoTen</td>
                         <td>@item.SDT</td>
                         <td>@item.DiaChi</td>
-                        <td>@item.TongTien</td>
+                        <td>@item.TongTien VNĐ</td>
 
                         @if (item.LoaiTT == 2)
                         {
@@ -104,4 +213,6 @@
             </tbody>
         </table>
     </div>
-</div>
+</div>-->
+
+

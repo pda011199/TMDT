@@ -6,161 +6,174 @@
     <h1 class="h3 mb-0 text-gray-800">Tình trạng đơn hàng</h1>
 </div>
 <div class="tab">
-    <form asp-action="Index" asp-controller="CartAdmin">
-        Từ
-        <input type="date" name="ngayBatDau" value="@ViewBag.ngayBatDau" />
-        Đến
-        <input type="date" name="ngayKetThuc" value="@ViewBag.ngayKetThuc" />
-        <select name="option">
-            <option value="1">Tất cả đơn hàng</option>
-            <option value="2">Đơn hàng giao không thành công</option>
-            <option value="3">Đơn hàng giao thành công đã thu tiền</option>
-            <option value="4">Đơn hàng giao thành công chưa thu tiền</option>
-            <option value="5">Đơn hàng đã hủy</option>
-            <option value="6">Đơn hàng đang đợi chấp nhận</option>
-            <option value="7">Đơn hàng chưa giao</option>
-            <option value="8">Đơn hàng đang giao</option>
-        </select>
+    <form class="form-inline" asp-action="Index" asp-controller="CartAdmin">
+        <div class="form-group">
+            Từ
+            <input class="form-control" type="date" name="ngayBatDau" value="@ViewBag.ngayBatDau" style="margin-left: 5px"/>
+            Đến
+            <input class="form-control" type="date" name="ngayKetThuc" value="@ViewBag.ngayKetThuc" style="margin-left: 5px"/>
+            <select class="form-control" name="option" style="margin-left: 5px">
+                <option value="1">Tất cả đơn hàng</option>
+                <option value="2">Đơn hàng giao không thành công</option>
+                <option value="3">Đơn hàng giao thành công đã thu tiền</option>
+                <option value="4">Đơn hàng giao thành công chưa thu tiền</option>
+                <option value="5">Đơn hàng đã hủy</option>
+                <option value="6">Đơn hàng đang đợi chấp nhận</option>
+                <option value="7">Đơn hàng chưa giao</option>
+                <option value="8">Đơn hàng đang giao</option>
+            </select>
 
-        <input type="submit" value="Lọc" />
+            <input class="btn btn-primary" type="submit" value="Lọc" style="margin-left: 5px"/>
+        </div>
     </form>
 </div>
-<div class="card-body">
-    <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
-            <thead>
-                <tr>
-                    <th>Mã hóa đơn</th>
-                    <th>Họ và tên</th>
-                    <th>Số điện thoại</th>
-                    <th>Địa chỉ</th>
-                    <th>Tổng tiền</th>
-                    <th>Loại thanh toán</th>
-                    <th>Thanh Toán</th>
-                    <th>Trạng thái</th>
-                    <th>Giao hàng</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="waitHoaDon">
-                @*Danh sách hóa đơn đang đợi*@
-                @foreach (var item in ViewBag.waitHoaDon)
-                {
-                <tr>
-                    <td>@item.MaHD</td>
-                    <td>@item.HoTen</td>
-                    <td>@item.SDT</td>
-                    <td>@item.DiaChi</td>
-                    <td>
-                        @item.TongTien
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hoadon-@item.MaHD">
-                            v
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="hoadon-@item.MaHD" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết tổng tiền</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Tiền sản phẩm: @item.TamTinh VNĐ</p>
-                                        <p>VAT: @item.VAT VNĐ</p>
-                                        @if (item.MaKhuyenMai != null)
-                                        {
-                                            <p>Giảm giá: @(item.KhuyenMai.GiaTri * item.TamTinh / 100)VNĐ</p>
-                                        }
-                                        <p>Tổng tiền: @item.TongTien VNĐ</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+<hr />
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">QL đơn hàng</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã HĐ</th>
+                        <th>Họ và tên</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th>Tổng tiền</th>
+                        <th>Loại thanh toán</th>
+                        <th>Thanh Toán</th>
+                        <th>Trạng thái</th>
+                        <th>Giao hàng</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody id="waitHoaDon">
+                    @*Danh sách hóa đơn đang đợi*@
+                    @foreach (var item in ViewBag.waitHoaDon)
+                    {
+                        <tr>
+                            <td>@item.MaHD</td>
+                            <td>@item.HoTen</td>
+                            <td>@item.SDT</td>
+                            <td>@item.DiaChi</td>
+                            <td>
+                                @item.TongTien
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hoadon-@item.MaHD">
+                                    v
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="hoadon-@item.MaHD" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết tổng tiền</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Tiền sản phẩm: @item.TamTinh VNĐ</p>
+                                                <p>VAT: @item.VAT VNĐ</p>
+                                                @if (item.MaKhuyenMai != null)
+                                                {
+                                                    <p>Giảm giá: @(item.KhuyenMai.GiaTri * item.TamTinh / 100)VNĐ</p>
+                                                }
+                                                <p>Tổng tiền: @item.TongTien VNĐ</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
+                            </td>
 
-                    @if (item.LoaiTT == 2)
-                    {
-                        <td>Paypal</td>
+                            @if (item.LoaiTT == 2)
+                            {
+                                <td>Paypal</td>
+                            }
+                            else
+                            {
+                                <td>Khi nhận hàng</td>
+                            }
+                            @if (item.TinhTrang == true)
+                            {
+                                <td>Đã thanh toán</td>
+                            }
+                            else
+                            {
+                                <td>Chưa thanh toán</td>
+                            }
+                            @if (item.TrangThai == null)
+                            {
+                                <td>Đang chờ</td>
+                            }
+                            @if (item.TrangThai == false)
+                            {
+                                <td>Đã hủy</td>
+                            }
+                            @if (item.TrangThai == true)
+                            {
+                                <td>Thành công</td>
+                            }
+                            @if (item.GiaoHang == 1)
+                            {
+                                <td>Chưa giao hàng</td>
+                            }
+                            else if (item.GiaoHang == 2)
+                            {
+                                <td>Đang giao hàng</td>
+                            }
+                            else if (item.GiaoHang == 3)
+                            {
+                                <td>Đã giao thành công</td>
+                            }
+                            else
+                            {
+                                <td>Giao hàng không thành công</td>
+                            }
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (item.TrangThai == null)
+                                        {
+                                            <a class="dropdown-item" asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Xác nhận</a>
+                                            <a class="dropdown-item" asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Từ chối</a>
+                                        }
+                                        @if (item.TinhTrang == false && item.GiaoHang == 3)
+                                        {
+                                            <a class="dropdown-item" asp-action="DaThanhToan" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Thanh toán</a>
+                                        }
+                                        @if (item.GiaoHang == 1 && item.TrangThai == true)
+                                        {
+                                            <a class="dropdown-item" asp-action="DangGiaoHang" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Đang giao hàng</a>
+                                        }
+                                        else if (item.GiaoHang == 2 && item.TrangThai == true)
+                                        {
+                                            <a class="dropdown-item" asp-action="GiaoHangThanhCong" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Giao hàng thành công</a>
+                                            <a class="dropdown-item" asp-action="GiaoHangThatBai" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Giao hàng thất bại</a>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     }
-                    else
-                    {
-                        <td>Khi nhận hàng</td>
-                    }
-                    @if (item.TinhTrang == true)
-                    {
-                        <td>Đã thanh toán</td>
-                    }
-                    else
-                    {
-                        <td>Chưa thanh toán</td>
-                    }
-                    @if (item.TrangThai == null)
-                    {
-                        <td>Đang chờ</td>
-                    }
-                    @if (item.TrangThai == false)
-                    {
-                        <td>Đã hủy</td>
-                    }
-                    @if (item.TrangThai == true)
-                    {
-                        <td>Thành công</td>
-                    }
-                    @if(item.GiaoHang == 1)
-                    {
-                        <td>Chưa giao hàng</td>
-                    }
-                    else if(item.GiaoHang == 2)
-                    {
-                        <td>Đang giao hàng</td>
-                    }
-                    else if(item.GiaoHang == 3)
-                    {
-                        <td>Đã giao thành công</td>
-                    }
-                    else
-                    {
-                        <td>Giao hàng không thành công</td>
-                    }
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                @if (item.TrangThai == null)
-                                {
-                                    <a class="dropdown-item" asp-action="Accept" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc >Xác nhận</a>
-                                    <a class="dropdown-item" asp-action="Cancel" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Từ chối</a>
-                                }
-                                @if (item.TinhTrang == false && item.GiaoHang == 3)
-                                {
-                                    <a class="dropdown-item" asp-action="DaThanhToan" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Thanh toán</a>
-                                }
-                                @if (item.GiaoHang == 1 && item.TrangThai == true)
-                                {
-                                    <a class="dropdown-item" asp-action="DangGiaoHang" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Đang giao hàng</a>
-                                }
-                                else if (item.GiaoHang == 2 && item.TrangThai == true)
-                                {
-                                    <a class="dropdown-item" asp-action="GiaoHangThanhCong" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Giao hàng thành công</a>
-                                    <a class="dropdown-item" asp-action="GiaoHangThatBai" asp-controller="CartAdmin" asp-route-id="@item.MaHD" asp-route-option=@ViewBag.option asp-route-ngayBatDau=@ViewBag.ngayBatDau asp-route-ngayKetThuc=@ViewBag.ngayKetThuc>Giao hàng thất bại</a>
-                                }
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+
+
 @*@section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
