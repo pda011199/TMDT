@@ -55,7 +55,6 @@
                 </dd>
 
                 <a asp-controller="Account" asp-action="EditUser" class="btn btn-primary">Chỉnh sửa thông tin cá nhân</a>
-                <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-primary">Đổi mật khẩu</a>
                 <a asp-controller="Account" asp-action="ProductFavor" class="btn btn-primary">Sản phẩm yêu thích</a>
             </dl>
         </div>
@@ -75,82 +74,49 @@
             </tr>
             @foreach (var item in ViewBag.hoaDon)
             {
-        <tr>
-            <th>@item.MaHD</th>
-            <th>@item.Ngay</th>
-            <th>
-                @item.TongTien VNĐ
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hoadon-@item.MaHD">
-                    v
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="hoadon-@item.MaHD" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết tổng tiền</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Tiền sản phẩm: @item.TamTinh VNĐ</p>
-                                <p>VAT: @item.VAT VNĐ</p>
-                                @if (item.MaKhuyenMai != null)
-                                {
-                                    <p>Giảm giá: @(item.KhuyenMai.GiaTri * item.TamTinh / 100)VNĐ</p>
-                                }
-                                <p>Tổng tiền: @item.TongTien VNĐ</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </th>
-            
-            @*******Tình trạng giao hàng (đã giao - chưa giao - giao thành công)*****@
-            @if (item.GiaoHang == 1)
-            {
-                <th>Chưa giao</th>
+                <tr>
+                    <th>@item.MaHD</th>
+                    <th>@item.Ngay</th>
+                    <th>@item.TongTien VNĐ</th>
+                    @*******Tình trạng giao hàng (đã giao - chưa giao - giao thành công)*****@
+                    @if (item.GiaoHang == 1)
+                    {
+                        <th>Chưa giao</th>
+                    }
+                    else if (item.GiaoHang == 2)
+                    {
+                        <th>Đang giao</th>
+                    }
+                    else
+                    {
+                        <th>Giao thành công</th>
+                    }
+                    @******Thanh toán tiền******@
+                    @if (item.TinhTrang == true)
+                    {
+                        <th>Đã thanh toán</th>
+                    }
+                    else
+                    {
+                        <th>Chưa thanh toán</th>
+                    }
+                    @******Trạng thái đơn hàng (thành công-đã hủy)******@
+                    @if (item.TrangThai == null)
+                    {
+                        <th>Đang chờ</th>
+                        <th><a asp-controller="Account" asp-action="CancelPurchase" asp-route-id="@item.MaHD">Hủy</a></th>
+                    }
+                    @if (item.TrangThai == false)
+                    {
+                        <th>Đã hủy</th>
+                    }
+                    @if (item.TrangThai == true)
+                    {
+                        <th>Thành công</th>
+                    }
+                </tr>
             }
-            else if (item.GiaoHang == 2)
-            {
-                <th>Đang giao</th>
-            }
-            else
-            {
-                <th>Giao thành công</th>
-            }
-            @******Thanh toán tiền******@
-            @if (item.TinhTrang == true)
-            {
-                <th>Đã thanh toán</th>
-            }
-            else
-            {
-                <th>Chưa thanh toán</th>
-            }
-            @******Trạng thái đơn hàng (thành công-đã hủy)******@
-            @if (item.TrangThai == null)
-            {
-                <th>Đang chờ</th>
-            }
-            @if (item.TrangThai == false)
-            {
-                <th>Đã hủy</th>
-            }
-            @if (item.TrangThai == true)
-            {
-                <th>Thành công</th>
-            }
-            @if (item.TrangThai == null || item.GiaoHang == 1 && item.TrangThai == true)
-            {
-                <th><a asp-controller="Account" asp-action="CancelPurchase" asp-route-id="@item.MaHD">Hủy</a></th>
-            }
-        </tr>
-            }
+
         </table>
     </div>
 </div>

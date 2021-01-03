@@ -34,7 +34,7 @@ namespace DoAn.Controllers
             {
                 k = id.GetValueOrDefault() * 5;
             }
-            List<SanPham> tr = context.SanPham.OrderBy(s => s.MaSp).Skip(k).Take(5).Include(l => l.LoaiSp).Where(p=> p.Deleted == false && p.SoLuong > 0 || p.SpHot == true && p.Deleted == false).ToList();
+            List<SanPham> tr = context.SanPham.OrderBy(s => s.MaSp).Skip(k).Take(5).Include(l => l.LoaiSp).Where(p=> p.Deleted == false).ToList();
             ViewBag.truyen = tr;
             ViewBag.count = context.SanPham.Count() / 5;
             return View();

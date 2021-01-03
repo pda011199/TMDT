@@ -37,7 +37,6 @@ namespace DoAn
             services.AddOptions();
             var mailsettings = Configuration.GetSection("MailSettings");
             services.Configure<MailSettings>(mailsettings);
-            //services.AddSingleton(mailsettings);
             services.AddTransient<ISendMailService, SendMailService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddIdentity<User, IdentityRole>(opt =>
@@ -46,9 +45,7 @@ namespace DoAn
                  opt.Password.RequireDigit = false;
                  opt.Password.RequireUppercase = false;
                  opt.Password.RequireNonAlphanumeric = false;
-             }).AddEntityFrameworkStores<DataContext>()
-             .AddDefaultTokenProviders();
-            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
+             }).AddEntityFrameworkStores<DataContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

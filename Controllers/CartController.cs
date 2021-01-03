@@ -27,7 +27,6 @@ namespace DoAn.Controllers
         private readonly string _clientId;
         private readonly string _secretKey;
         public double TyGiaUSD = 23300;
-        public string format = "dd/MM/yyyy";
 
         public CartController(DataContext data, UserManager<User> userManager, ISendMailService sendMailService, IConfiguration config)
         {
@@ -140,7 +139,7 @@ namespace DoAn.Controllers
                     Email = user.Email,
                     TamTinh = tamtinh,
                     TongTien = tongtien,
-                    Ngay = DateTime.Today,
+                    Ngay = DateTime.Now,
                     GiaoHang = 1,
                     LoaiTT = 1,
                     VAT = vat,
@@ -195,7 +194,7 @@ namespace DoAn.Controllers
                     Email = eMail,
                     TamTinh = tamtinh,
                     TongTien = tongtien,
-                    Ngay = DateTime.Today,
+                    Ngay = DateTime.Now,
                     GiaoHang = 1,
                     LoaiTT = 1,
                     VAT = vat ,
@@ -273,7 +272,7 @@ namespace DoAn.Controllers
         }
         
         
-        public IActionResult CheckBill(int typePayment)
+        public async Task<IActionResult> CheckBillAsync(int typePayment)
         {
             
             if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
@@ -298,9 +297,15 @@ namespace DoAn.Controllers
                 ViewBag.cart = cart;
                 ViewBag.total = sum + vat;
                 ViewBag.vat = vat;
+
+                User user = await userManager.GetUserAsync(User);
+                ViewBag.user = user;
                 return View();
             }
             ViewBag.status = 1;
+
+            
+
             return View("Index");
         }
 
@@ -447,8 +452,16 @@ namespace DoAn.Controllers
             //Tạo đơn hàng trong database với trạng thái thanh toán là "Paypal" và thành công
             List<ProductToCart> cart = SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart");
             User user = await userManager.GetUserAsync(User);
+            string maKhuyenMai = null;
             double tamtinh = cart.Sum(item => item.SanPham.Gia * item.SoLuong);
             var tongtien = tamtinh + tamtinh / 10;
+            if (SessionHelper.GetObjectFromJson<MaKhuyenMai>(HttpContext.Session, "coupon") != null)
+            {
+                maKhuyenMai = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "coupon");
+                var mkm = data.MaKhuyenMai.Find(maKhuyenMai);
+                tongtien = (tongtien * (100 - mkm.GiaTri)) / 100;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "counpon", null);
+            }
             //tao hoa don
             HoaDon hd = new HoaDon
             {
@@ -458,12 +471,12 @@ namespace DoAn.Controllers
                 Email = user.Email,
                 TamTinh = tamtinh,
                 TongTien = tongtien,
-                Ngay = DateTime.Today,
+                Ngay = DateTime.Now,
                 GiaoHang = 1,
                 LoaiTT = 2,
                 VAT = tamtinh / 10,
                 TinhTrang = true,
-                TrangThai = true
+                MaKhuyenMai = maKhuyenMai
             };
             data.HoaDon.Add(hd);
             data.SaveChanges();

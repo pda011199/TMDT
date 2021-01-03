@@ -25,36 +25,19 @@
                 {
                     @foreach (var item in Model)
                     {
-                <tr>
-                    <th>@item.Id</th>
-                    <th>@item.NgayBatDau</th>
-                    <th>@item.NgayKetThuc</th>
-                    <th>@item.GiaTri %</th>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <tr>
+                            <th>@item.Id</th>
+                            <th>@item.NgayBatDau</th>
+                            <th>@item.NgayKetThuc</th>
+                            <th>@item.GiaTri %</th>
+                            <th style="text-align:center">
                                 <a asp-controller="Coupon" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Sửa</a>
-                                <a asp-controller="Coupon" asp-action="SendCoupon" asp-route-id="@item.Id" asp-route-option="1" class="btn btn-outline-warning">Gửi cho tất cả khách hàng thân thiết</a>
-                                <a asp-controller="Coupon" asp-action="SendCoupon" asp-route-id="@item.Id" asp-route-option="2" class="btn btn-outline-warning">Gửi cho khách hàng thẻ vàng</a>
-                                <a asp-controller="Coupon" asp-action="SendCoupon" asp-route-id="@item.Id" asp-route-option="3" class="btn btn-outline-warning">Gửi cho khách hàng thẻ bạch kim</a>
-                                <a asp-controller="Coupon" asp-action="SendCoupon" asp-route-id="@item.Id" asp-route-option="4" class="btn btn-outline-warning">Gửi cho khách hàng thẻ kim cương</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                            </th>
+                        </tr>
                     }
                 }
             </tbody>
         </table>
-        @if(ViewBag.status == 1)
-        {
-            <p>
-                Mã khuyến mãi không hợp lệ hoặc đã hết hạn.
-            </p>
-        }
     </div>
 </div>
 

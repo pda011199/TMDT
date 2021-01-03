@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DoAn.Models.Domain;
-using DoAn.Models.Email;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +13,9 @@ namespace DoAn.Areas.Admin.Controllers
     public class CouponController : Controller
     {
         private readonly DataContext data;
-        private readonly ISendMailService sendMailService;
-        public CouponController(DataContext data, ISendMailService sendMailService)
+        public CouponController(DataContext data)
         {
             this.data = data;
-            this.sendMailService = sendMailService;
         }
         public IActionResult Index()
         {
@@ -71,49 +68,6 @@ namespace DoAn.Areas.Admin.Controllers
             ViewBag.Status = 1;
             return View(maKhuyenMai);
         }
-        public async Task<IActionResult> SendCouponAsync(string id,int option)
-        {
-            MaKhuyenMai coupon = data.MaKhuyenMai.Find(id);
-            DateTime now = DateTime.Today;
-            if(coupon == null || coupon.NgayKetThuc.CompareTo(now) < 0)
-            {
-                ViewBag.status = 1;
-                return View("Index");
-            } 
-            switch(option)
-            {
-                case 1:
-                    List<User> lus = data.Users.ToList();
-                    foreach(var item in lus)
-                    {
-                        await SendCouponForUserAsync(coupon, item.Email);
-                    }
-                    return View("Index");
-                case 2:
-                    List<User> kus = data.Users.Where(p=>p.DiemTichLuy >= 5000 && p.DiemTichLuy < 10000).ToList();
-                    foreach (var item in kus)
-                    {
-                        await SendCouponForUserAsync(coupon, item.Email);
-                    }
-                    return View("Index");
-                case 3:
-                    List<User> jus = data.Users.Where(p => p.DiemTichLuy >= 10000 && p.DiemTichLuy > 15000).ToList();
-                    foreach (var item in jus)
-                    {
-                        await SendCouponForUserAsync(coupon, item.Email);
-                    }
-                    return View("Index");
-                case 4:
-                    List<User> hus = data.Users.Where(p => p.DiemTichLuy >= 15000).ToList();
-                    foreach (var item in hus)
-                    {
-                        await SendCouponForUserAsync(coupon, item.Email);
-                    }
-                    return View("Index");
-                default:
-                    return View("Index");
-            }
-        }
         private string GenerateRandomString()
         {
             int length = 7;
@@ -139,16 +93,6 @@ namespace DoAn.Areas.Admin.Controllers
             }
             while (check == false);
             return str_build.ToString();
-        }
-        private async Task SendCouponForUserAsync(MaKhuyenMai maCoupon, string email)
-        {
-            MailContent content = new MailContent
-            {
-                To = email,
-                Subject = "Tặng mã khuyến mãi mua sản phẩm.",
-                Body ="Xin chào! Cảm ơn vì đã sử dụng ứng dụng của chúng tôi.Chúng tôi gửi tặng bạn mã khuyến mãi:'"+ maCoupon.Id+"' có giá trị "+maCoupon.GiaTri+"% bắt đầu từ ngày "+maCoupon.NgayBatDau+" và kết thúc ngày "+maCoupon.NgayKetThuc+".Chân thành cảm ơn." 
-            };
-            await sendMailService.SendMail(content);
         }
     }
 }

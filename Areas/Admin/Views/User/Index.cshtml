@@ -7,14 +7,13 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách người dùng</h1>
 </div>
-<a asp-controller="User" asp-action="Create" class="btn btn-primary">Thêm Người Dùng</a>
 <div class="card-body">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align:center">
             <thead>
                 <tr style="text-align:center">
+                    <th>ID</th>
                     <th>Họ và tên</th>
-                    <th>Email</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th></th>
@@ -24,25 +23,21 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <th>@item.Id</th>
                         <th>@item.HoTen</th>
-                        <th>@item.Email</th>
                         <th>@item.PhoneNumber</th>
                         <th>@item.DiaChi</th>
-                        <th>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    ...
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" asp-action="Edit" asp-controller="User" asp-route-id="@item.Id">Edit</a>
-                                        
-                                </div>
-                            </div>
-                        </th>
                     </tr>
                 }
 
             </tbody>
         </table>
+        @*<div style="text-align:center">
+                @for (int i = 0; i < ViewBag.count; i++)
+                {
+                    <a asp-controller="Product" asp-action="Index" asp-route-id="@i" class="btn btn-outline-primary">@i</a>
+                }
+            </div>*@
+
     </div>
 </div>

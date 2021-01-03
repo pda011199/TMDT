@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAn.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201219142720_initData")]
-    partial class initData
+    [Migration("20201220131850_initDB")]
+    partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -360,22 +360,22 @@ namespace DoAn.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "21c8d41e-a9c5-49e0-9242-e43397f6dfbc",
-                            ConcurrencyStamp = "62d736f8-09ca-4df8-8d89-7c4c2a1bfd0f",
+                            Id = "9d6b21aa-6bb6-4596-8eef-95bf110fd770",
+                            ConcurrencyStamp = "60e4f8e3-5224-465b-87e9-a3d4ae18206b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "7750d4c5-0c66-4073-98fa-d1b34bfd59d9",
-                            ConcurrencyStamp = "acd133bb-e1a1-4779-9d08-b8c8513750bd",
+                            Id = "05051e37-63ba-43c5-b4ef-f57ad691c591",
+                            ConcurrencyStamp = "364950cf-2aa1-45f4-bab0-797b09f1ad3d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "12b1552f-a7be-4014-b6fc-dac871b2b3b3",
-                            ConcurrencyStamp = "060eab60-d5fd-4fc2-a56d-c30bdc25aff2",
+                            Id = "b912cc6d-4d29-46d7-aee9-90426294b091",
+                            ConcurrencyStamp = "b051f221-ae95-4ac3-a394-ba20338b8019",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
