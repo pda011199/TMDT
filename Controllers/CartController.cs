@@ -273,7 +273,7 @@ namespace DoAn.Controllers
         }
         
         
-        public IActionResult CheckBill(int typePayment)
+        public async Task<IActionResult> CheckBillAsync(int typePayment)
         {
             
             if (SessionHelper.GetObjectFromJson<List<ProductToCart>>(HttpContext.Session, "cart") != null)
@@ -298,9 +298,15 @@ namespace DoAn.Controllers
                 ViewBag.cart = cart;
                 ViewBag.total = sum + vat;
                 ViewBag.vat = vat;
+
+                User user = await userManager.GetUserAsync(User);
+                ViewBag.user = user;
                 return View();
             }
             ViewBag.status = 1;
+
+            
+
             return View("Index");
         }
 

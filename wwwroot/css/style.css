@@ -5081,13 +5081,13 @@ ul {
 }
 
 /* line 1662, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
-.order_box h2 {
-  border-bottom: 1px solid #dddddd;
-  font-size: 18px;
-  font-weight: 500;
-  color: #2a2a2a;
-  padding-bottom: 15px;
-}
+    .order_box h2 {
+        border-bottom: 1px solid #dddddd;
+        font-size: 18px;
+        font-weight: 500;
+        color: #090909;
+        padding-bottom: 15px;
+    }
 
 /* line 1672, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
 .order_box .list li a {
