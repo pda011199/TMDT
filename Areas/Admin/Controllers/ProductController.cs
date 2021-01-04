@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 namespace DoAn.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles ="Administrator")]
-    //[Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Employee")]
 
     public class ProductController : Controller
     {

@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using DoAn.Models.Domain;
 using DoAn.Models.Email;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Employee")]
     public class CouponController : Controller
     {
         private readonly DataContext data;

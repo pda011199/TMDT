@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Routing;
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles ="Administrator")]
-    //[Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Employee")]
     public class CartAdminController : Controller
     {
         private readonly DataContext data;
