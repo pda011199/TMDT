@@ -7,6 +7,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAfnVorPykY0OdodFHX1F6tAAAAAACAAAAAAAQZgAAAAEAACAAAACyEDLzKKPyqFyivJObmTAPAMpcGFOL0z+84o2D4MlvUQAAAAAOgAAAAAIAACAAAABKPYajimu3UHrB7k5PVI/j1uFNdt8wHVw9p8EdIygmbiAAAAD1pTyiVxllh4ocCjO/ffaZ8fsXL2KKzLhETNzTWmCVL0AAAABQE2QTbqR4nfR5J86x4NFmWata1ftqqZ9azLnaaMcaL/qUaOOazXJskccxvjbbvb9ubJiwcYeP1EvalLby6y5j</EncryptedPassword>
-    <_PublishTargetUrl>D:\Bài tập\Thương mại điện tử\TMDT\bin\Release</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Admin\Desktop\New folder</_PublishTargetUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=SQL5097.site4now.net%3bInitial Catalog=DB_A6C246_pda011199%3bUser Id=DB_A6C246_pda011199_admin%3bPassword=Pda011199</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
 </Project>

@@ -12,8 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrator")]
-    [Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Administrator,Employee")]
 
     public class RoleController : Controller
     {

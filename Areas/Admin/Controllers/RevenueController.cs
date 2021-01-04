@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace DoAn.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Administrator")]
-    [Authorize(Roles = "Employee")]
+    [Authorize(Roles = "Administrator,Employee")]
     public class RevenueController : Controller
     {
         private readonly DataContext data;
